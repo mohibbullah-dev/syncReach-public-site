@@ -8,6 +8,20 @@ import { Marquee } from "@/components/ui/marquee";
 import type { GalleryItem } from "@/data/gallery";
 import { usePublicGallery } from "@/lib/use-public-content";
 
+/** Repeat items so each marquee row always fills the viewport. */
+function padRow(items: GalleryItem[], min = 6): GalleryItem[] {
+  if (items.length === 0) return items;
+  if (items.length >= min) return items;
+  const out: GalleryItem[] = [];
+  let i = 0;
+  while (out.length < min) {
+    const item = items[i % items.length]!;
+    out.push({ ...item, id: `${item.id}__pad-${out.length}` });
+    i += 1;
+  }
+  return out;
+}
+
 /** Homepage preview — few items + marquee/hover, full grid lives on /gallery */
 export function GallerySection() {
   const { items: all } = usePublicGallery();
@@ -20,8 +34,8 @@ export function GallerySection() {
     setOpen(true);
   };
 
-  const rowA = items.filter((_, i) => i % 2 === 0);
-  const rowB = items.filter((_, i) => i % 2 === 1);
+  const rowA = padRow(items.filter((_, i) => i % 2 === 0));
+  const rowB = padRow(items.filter((_, i) => i % 2 === 1));
 
   return (
     <section id="gallery" className="section-y relative overflow-hidden">
@@ -40,9 +54,9 @@ export function GallerySection() {
         />
       </div>
 
-      <div className="section-stack relative space-y-4">
+      <div className="section-stack relative mt-10 w-full space-y-4">
         <Marquee pauseOnHover className="[--duration:45s] [--gap:1.25rem]">
-          {(rowA.length > 0 ? rowA : items).map((item) => (
+          {(rowA.length > 0 ? rowA : padRow(items)).map((item) => (
             <GalleryTile
               key={`a-${item.id}`}
               item={item}
@@ -53,7 +67,7 @@ export function GallerySection() {
         </Marquee>
 
         <Marquee reverse pauseOnHover className="[--duration:50s] [--gap:1.25rem]">
-          {(rowB.length > 0 ? rowB : items).map((item) => (
+          {(rowB.length > 0 ? rowB : padRow(items)).map((item) => (
             <GalleryTile
               key={`b-${item.id}`}
               item={item}
