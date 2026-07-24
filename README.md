@@ -28,6 +28,7 @@ npm run dev            # http://localhost:8080
 - Env: `VITE_API_URL=https://YOUR-API.onrender.com/api`
 
 ### Vercel
-- Import this repo → Root `.`
-- Env: `VITE_API_URL`
-- If SSR issues, prefer Render Web Service (Nitro node-server).
+1. Import repo → Framework **TanStack Start**
+2. Leave Output Directory empty (not `dist`)
+3. Env: `VITE_API_URL=https://YOUR-API.onrender.com/api`
+4. Push latest (`vercel.json` + vite vercel preset) then Redeploy
