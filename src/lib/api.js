@@ -30,3 +30,14 @@ export async function fetchPublicGallery() {
 export async function fetchPublicTeam() {
   return apiFetch("/team/public");
 }
+
+export async function fetchPublicPricing() {
+  return apiFetch("/pricing/public");
+}
+
+export async function submitContactMessage(payload) {
+  return apiFetch("/contact", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}

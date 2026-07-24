@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 
 import {
   fetchPublicGallery,
+  fetchPublicPricing,
   fetchPublicReviews,
   fetchPublicTeam,
 } from "@/lib/api";
 import { galleryItems as seedGallery, type GalleryItem } from "@/data/gallery";
+import { pricingPlans as seedPricing, type PricingPlan } from "@/data/pricing";
 import { reviews as seedReviews, type Review } from "@/data/reviews";
 import { teamMembers as seedTeam, type TeamMember } from "@/data/team";
 import { sanitizeProfileImage } from "@/lib/profile-image";
@@ -90,6 +92,35 @@ export function usePublicTeam() {
     ).then((list) => {
       if (!cancelled) {
         setItems(list.filter((m) => m.published !== false).sort((a, b) => a.sortOrder - b.sortOrder));
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { items, loading };
+}
+
+export function usePublicPricing() {
+  const [items, setItems] = useState<PricingPlan[]>(() =>
+    seedPricing.filter((p) => p.published).sort((a, b) => a.sortOrder - b.sortOrder),
+  );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void withFallback(
+      fetchPublicPricing() as Promise<PricingPlan[]>,
+      seedPricing.filter((p) => p.published).sort((a, b) => a.sortOrder - b.sortOrder),
+    ).then((list) => {
+      if (!cancelled) {
+        setItems(
+          list
+            .filter((p) => p.published !== false)
+            .sort((a, b) => a.sortOrder - b.sortOrder),
+        );
         setLoading(false);
       }
     });

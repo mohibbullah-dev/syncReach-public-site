@@ -144,12 +144,12 @@ export function SiteFooter() {
                   </li>
                   <li className="py-2">
                     <TipLink
-                      href="mailto:Sabidkhan@gmail.com"
+                      href="mailto:safiq3d@gmail.com"
                       tip="Send an email"
                       className="flex items-start gap-3 text-sm text-muted-foreground transition hover:text-foreground"
                     >
                       <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                      <span>Sabidkhan@gmail.com</span>
+                      <span>safiq3d@gmail.com</span>
                     </TipLink>
                   </li>
                   <li className="py-2 last:pb-0">
