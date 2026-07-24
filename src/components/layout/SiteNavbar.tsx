@@ -5,7 +5,9 @@ import {
   BarChart3,
   HelpCircle,
   Images,
+  LayoutDashboard,
   LayoutGrid,
+  LogIn,
   Mail,
   Menu,
   MessageSquareQuote,
@@ -15,6 +17,10 @@ import {
 } from "lucide-react";
 
 import { BrandLogo } from "@/components/layout/BrandLogo";
+import {
+  resolveAdminNavState,
+  type AdminNavState,
+} from "@/lib/admin-nav";
 import { cn } from "@/lib/utils";
 import {
   Sheet,
@@ -87,9 +93,56 @@ function useScrolled(threshold = 24) {
   return scrolled;
 }
 
+function useAdminNav() {
+  const [state, setState] = useState<AdminNavState>({ visible: false });
+
+  useEffect(() => {
+    let cancelled = false;
+    void resolveAdminNavState().then((next) => {
+      if (!cancelled) setState(next);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return state;
+}
+
+function AdminCta({
+  state,
+  className,
+  compact,
+}: {
+  state: Extract<AdminNavState, { visible: true }>;
+  className?: string;
+  compact?: boolean;
+}) {
+  const isDashboard = state.mode === "dashboard";
+  return (
+    <a
+      href={state.href}
+      className={cn(
+        "inline-flex items-center justify-center gap-1.5 rounded-full border border-brand/25 bg-white/90 font-semibold text-brand shadow-sm backdrop-blur-sm transition",
+        "hover:border-brand/40 hover:bg-brand/5 hover:shadow-md",
+        compact ? "px-3 py-2 text-xs" : "px-4 py-2.5 text-sm",
+        className,
+      )}
+    >
+      {isDashboard ? (
+        <LayoutDashboard className={cn(compact ? "h-3.5 w-3.5" : "h-4 w-4")} />
+      ) : (
+        <LogIn className={cn(compact ? "h-3.5 w-3.5" : "h-4 w-4")} />
+      )}
+      {isDashboard ? "Dashboard" : "Dashboard login"}
+    </a>
+  );
+}
+
 export function SiteNavbar() {
   const [open, setOpen] = useState(false);
   const scrolled = useScrolled();
+  const adminNav = useAdminNav();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHome = pathname === "/";
   const sectionActive = useActiveSection(
@@ -137,6 +190,7 @@ export function SiteNavbar() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          {adminNav.visible ? <AdminCta state={adminNav} /> : null}
           <a
             href="/#contact"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
@@ -153,6 +207,9 @@ export function SiteNavbar() {
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
+          {adminNav.visible ? (
+            <AdminCta state={adminNav} compact className="hidden sm:inline-flex" />
+          ) : null}
           <a
             href="/#pricing"
             className="hidden items-center rounded-full bg-gradient-brand px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-glow sm:inline-flex"
@@ -218,6 +275,9 @@ export function SiteNavbar() {
               </nav>
 
               <div className="space-y-3 border-t border-border bg-card/40 px-5 py-5">
+                {adminNav.visible ? (
+                  <AdminCta state={adminNav} className="w-full rounded-xl py-3.5" />
+                ) : null}
                 <a
                   href="/#pricing"
                   onClick={() => setOpen(false)}
