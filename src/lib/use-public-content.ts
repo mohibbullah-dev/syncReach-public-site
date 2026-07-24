@@ -1,0 +1,102 @@
+import { useEffect, useState } from "react";
+
+import {
+  fetchPublicGallery,
+  fetchPublicReviews,
+  fetchPublicTeam,
+} from "@/lib/api";
+import { galleryItems as seedGallery, type GalleryItem } from "@/data/gallery";
+import { reviews as seedReviews, type Review } from "@/data/reviews";
+import { teamMembers as seedTeam, type TeamMember } from "@/data/team";
+import { sanitizeProfileImage } from "@/lib/profile-image";
+
+function withFallback<T>(promise: Promise<T>, fallback: T): Promise<T> {
+  return promise.catch((err) => {
+    console.warn("API unavailable, using seed data:", err);
+    return fallback;
+  });
+}
+
+export function usePublicReviews(opts?: { featuredOnly?: boolean }) {
+  const [items, setItems] = useState<Review[]>(() =>
+    seedReviews
+      .map((r) => ({ ...r, avatar: sanitizeProfileImage(r.avatar) }))
+      .filter((r) => (opts?.featuredOnly ? r.featured : true)),
+  );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void withFallback(
+      fetchPublicReviews(opts?.featuredOnly ? { featured: "true" } : {}).then((list) =>
+        (list as Review[]).map((r) => ({
+          ...r,
+          avatar: sanitizeProfileImage(r.avatar),
+        })),
+      ),
+      seedReviews
+        .map((r) => ({ ...r, avatar: sanitizeProfileImage(r.avatar) }))
+        .filter((r) => (opts?.featuredOnly ? r.featured : true)),
+    ).then((list) => {
+      if (!cancelled) {
+        setItems(list);
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [opts?.featuredOnly]);
+
+  return { items, loading };
+}
+
+export function usePublicGallery() {
+  const [items, setItems] = useState<GalleryItem[]>(() =>
+    seedGallery.filter((g) => g.published).sort((a, b) => a.sortOrder - b.sortOrder),
+  );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void withFallback(
+      fetchPublicGallery() as Promise<GalleryItem[]>,
+      seedGallery.filter((g) => g.published).sort((a, b) => a.sortOrder - b.sortOrder),
+    ).then((list) => {
+      if (!cancelled) {
+        setItems(list.filter((g) => g.published !== false).sort((a, b) => a.sortOrder - b.sortOrder));
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { items, loading };
+}
+
+export function usePublicTeam() {
+  const [items, setItems] = useState<TeamMember[]>(() =>
+    seedTeam.filter((m) => m.published).sort((a, b) => a.sortOrder - b.sortOrder),
+  );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void withFallback(
+      fetchPublicTeam() as Promise<TeamMember[]>,
+      seedTeam.filter((m) => m.published).sort((a, b) => a.sortOrder - b.sortOrder),
+    ).then((list) => {
+      if (!cancelled) {
+        setItems(list.filter((m) => m.published !== false).sort((a, b) => a.sortOrder - b.sortOrder));
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { items, loading };
+}

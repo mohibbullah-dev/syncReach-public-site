@@ -1,0 +1,82 @@
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+
+import { GalleryLightbox, GalleryTile } from "@/components/gallery/GalleryMedia";
+import { SectionHeader } from "@/components/layout/SectionHeader";
+import { Marquee } from "@/components/ui/marquee";
+import type { GalleryItem } from "@/data/gallery";
+import { usePublicGallery } from "@/lib/use-public-content";
+
+/** Homepage preview — few items + marquee/hover, full grid lives on /gallery */
+export function GallerySection() {
+  const { items: all } = usePublicGallery();
+  const items = all.slice(0, 6);
+  const [selected, setSelected] = useState<GalleryItem | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const openItem = (item: GalleryItem) => {
+    setSelected(item);
+    setOpen(true);
+  };
+
+  const rowA = items.filter((_, i) => i % 2 === 0);
+  const rowB = items.filter((_, i) => i % 2 === 1);
+
+  return (
+    <section id="gallery" className="section-y relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,oklch(0.75_0.15_245_/_0.16),transparent_55%)]" />
+
+      <div className="container-page relative">
+        <SectionHeader
+          align="center"
+          eyebrow="Gallery"
+          title={
+            <>
+              Moments from the <span className="text-gradient-brand">outbound floor</span>.
+            </>
+          }
+          description="A quick look at photos and videos from the team — explore the full gallery for everything."
+        />
+      </div>
+
+      <div className="section-stack relative space-y-4">
+        <Marquee pauseOnHover className="[--duration:45s] [--gap:1.25rem]">
+          {(rowA.length > 0 ? rowA : items).map((item) => (
+            <GalleryTile
+              key={`a-${item.id}`}
+              item={item}
+              onOpen={openItem}
+              className="h-52 w-72 shrink-0 md:h-60 md:w-80"
+            />
+          ))}
+        </Marquee>
+
+        <Marquee reverse pauseOnHover className="[--duration:50s] [--gap:1.25rem]">
+          {(rowB.length > 0 ? rowB : items).map((item) => (
+            <GalleryTile
+              key={`b-${item.id}`}
+              item={item}
+              onOpen={openItem}
+              className="h-52 w-72 shrink-0 md:h-60 md:w-80"
+            />
+          ))}
+        </Marquee>
+
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent md:w-28" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent md:w-28" />
+      </div>
+
+      <div className="container-page relative mt-10 flex justify-center">
+        <Link
+          to="/gallery"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-medium text-primary-foreground shadow-glow transition hover:opacity-95"
+        >
+          Explore full gallery <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+
+      <GalleryLightbox item={selected} open={open} onOpenChange={setOpen} />
+    </section>
+  );
+}
