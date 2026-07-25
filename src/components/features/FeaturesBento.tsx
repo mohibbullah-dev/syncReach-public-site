@@ -1,4 +1,4 @@
-import {
+﻿import {
   ArrowRight,
   BarChart3,
   Inbox,
@@ -59,8 +59,9 @@ export function FeaturesBento() {
           eyebrow="Why SyncReach"
           title={
             <>
-              Everything you need to fill your pipeline —{" "}
-              <span className="text-gradient-brand">in one place</span>.
+              Everything you need to fill
+              <br />
+              your pipeline — <span className="text-gradient-brand">in one place</span>.
             </>
           }
           description="Stop stitching together 6 tools. SyncReach is your all-in-one outbound engine."
@@ -73,16 +74,16 @@ export function FeaturesBento() {
               <article
                 key={feature.title}
                 className={cn(
-                  "group flex flex-col rounded-[1.75rem] border border-border/70 bg-white p-7",
+                  "group flex flex-col rounded-[12px] border border-border/70 bg-white p-7",
                   "shadow-[0_10px_36px_-22px_oklch(0.16_0.03_260_/_0.3)] transition duration-300",
                   "hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-[0_18px_44px_-26px_oklch(0.16_0.03_260_/_0.38)]",
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand text-primary-foreground shadow-glow">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-gradient-brand text-primary-foreground shadow-glow">
                     <Icon className="h-5 w-5" strokeWidth={2} />
                   </div>
-                  <span className="rounded-full bg-brand/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand">
+                  <span className="rounded-[12px] bg-brand/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand">
                     {feature.tag}
                   </span>
                 </div>

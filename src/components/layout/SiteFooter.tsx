@@ -1,4 +1,4 @@
-import {
+﻿import {
   ChevronRight,
   Facebook,
   Instagram,
@@ -81,7 +81,7 @@ export function SiteFooter() {
 
         <div className="container-page relative space-y-3">
           {/* Main card */}
-          <div className="rounded-[1.75rem] border border-border/70 bg-white p-6 shadow-[0_16px_48px_-28px_oklch(0.16_0.03_260_/_0.35)] md:p-8">
+          <div className="rounded-[12px] border border-border/70 bg-white p-6 shadow-[0_16px_48px_-28px_oklch(0.16_0.03_260_/_0.35)] md:p-8">
             <div className="grid gap-8 md:grid-cols-12 md:gap-8 md:items-start">
               {/* Brand */}
               <div className="md:col-span-5">
@@ -168,7 +168,7 @@ export function SiteFooter() {
           </div>
 
           {/* Bottom bar card */}
-          <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-border/70 bg-white px-6 py-4 text-xs text-muted-foreground shadow-[0_10px_30px_-22px_oklch(0.16_0.03_260_/_0.3)] sm:flex-row md:px-8">
+          <div className="flex flex-col items-center justify-between gap-4 rounded-[12px] border border-border/70 bg-white px-6 py-4 text-xs text-muted-foreground shadow-[0_10px_30px_-22px_oklch(0.16_0.03_260_/_0.3)] sm:flex-row md:px-8">
             <div>© {year} SyncReach · All rights reserved.</div>
             <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
               {legalLinks.map((link, i) => (

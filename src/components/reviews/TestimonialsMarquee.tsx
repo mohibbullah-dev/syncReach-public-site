@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Mic, Play, Quote, Star, Type, Video } from "lucide-react";
 
@@ -25,7 +25,7 @@ function TypeBadge({ type }: { type: ReviewType }) {
   } as const;
   const { icon: Icon, label } = map[type];
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground backdrop-blur">
+    <span className="inline-flex items-center gap-1 rounded-[12px] border border-border bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground backdrop-blur">
       <Icon className="h-3 w-3 text-brand-glow" />
       {label}
     </span>
@@ -44,15 +44,15 @@ function ReviewCard({
       type="button"
       onClick={() => onOpen(review)}
       className={cn(
-        "relative w-64 cursor-pointer overflow-hidden rounded-2xl border border-border bg-card/80 p-4 text-left shadow-elevate backdrop-blur transition",
+        "relative w-[17rem] cursor-pointer overflow-hidden rounded-[12px] border border-border bg-white p-4 text-left shadow-[0_14px_36px_-18px_rgba(15,23,42,0.32)] backdrop-blur transition sm:w-[18.5rem] sm:p-[1.125rem]",
         "hover:-translate-y-0.5 hover:border-brand/50 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
       )}
     >
       <div className="mb-3 flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5">
-          <ProfileAvatar name={review.name} src={review.avatar} className="h-9 w-9 border border-border" />
+          <ProfileAvatar name={review.name} src={review.avatar} className="h-10 w-10 border border-border" />
           <div className="min-w-0">
-            <div className="truncate text-sm font-semibold">{review.name}</div>
+            <div className="truncate text-sm font-bold">{review.name}</div>
             <div className="truncate text-xs text-muted-foreground">{review.username}</div>
           </div>
         </div>
@@ -60,15 +60,15 @@ function ReviewCard({
       </div>
 
       {review.type === "video" && (
-        <div className="relative mb-3 overflow-hidden rounded-xl border border-border bg-muted">
+        <div className="relative mb-3 overflow-hidden rounded-[12px] border border-border bg-muted">
           {review.thumbnailUrl || isRealProfileImage(review.avatar) ? (
             <img
               src={review.thumbnailUrl || review.avatar}
               alt=""
-              className="h-28 w-full object-cover opacity-90"
+              className="h-32 w-full object-cover opacity-90"
             />
           ) : (
-            <div className="h-28 w-full bg-muted" />
+            <div className="h-32 w-full bg-muted" />
           )}
           <div className="absolute inset-0 flex items-center justify-center bg-black/35">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-brand text-primary-foreground shadow-glow">
@@ -79,7 +79,7 @@ function ReviewCard({
       )}
 
       {review.type === "audio" && (
-        <div className="mb-3 flex items-center gap-3 rounded-xl border border-border bg-muted/60 px-3 py-2.5">
+        <div className="mb-3 flex items-center gap-3 rounded-[12px] border border-border bg-muted/60 px-3 py-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-primary-foreground">
             <Mic className="h-4 w-4" />
           </span>
@@ -99,7 +99,9 @@ function ReviewCard({
         <Quote className="mb-2 h-4 w-4 text-brand-glow/70" />
       )}
 
-      <p className="line-clamp-3 text-sm leading-relaxed text-foreground/90">"{review.body}"</p>
+      <p className="line-clamp-3 text-sm leading-relaxed text-foreground/90">
+        &ldquo;{review.body}&rdquo;
+      </p>
       <div className="mt-3 flex items-center gap-0.5">
         {Array.from({ length: review.rating }).map((_, i) => (
           <Star key={i} className="h-3.5 w-3.5 fill-brand-glow text-brand-glow" />
@@ -122,7 +124,7 @@ function ReviewDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg gap-0 overflow-hidden p-0 sm:rounded-2xl">
+      <DialogContent className="max-w-lg gap-0 overflow-hidden p-0 sm:rounded-[12px]">
         <div className="border-b border-border bg-card/50 px-6 py-5">
           <DialogHeader className="space-y-3 text-left">
             <div className="flex items-center justify-between gap-3">
@@ -172,24 +174,29 @@ function ReviewDetailDialog({
   );
 }
 
+/** Fill every column evenly so shorter cols don’t leave a blank top gap. */
+function columnReviews(reviews: Review[], colIndex: number, colCount: number, min = 6): Review[] {
+  if (reviews.length === 0) return [];
+  const base = reviews.filter((_, i) => i % colCount === colIndex);
+  const pool = base.length > 0 ? base : reviews;
+  const out = [...pool];
+  let i = 0;
+  while (out.length < min) {
+    out.push(pool[i % pool.length]);
+    i += 1;
+  }
+  return out;
+}
+
 export function TestimonialsMarquee() {
   const { items: featured } = usePublicReviews({ featuredOnly: true });
   const [selected, setSelected] = useState<Review | null>(null);
   const [open, setOpen] = useState(false);
 
-  const col1 = featured.filter((_, i) => i % 4 === 0);
-  const col2 = featured.filter((_, i) => i % 4 === 1);
-  const col3 = featured.filter((_, i) => i % 4 === 2);
-  const col4 = featured.filter((_, i) => i % 4 === 3);
-
-  // Ensure each column has items for a full 3D look
-  const pad = (col: Review[], fallback: Review[]) =>
-    col.length > 0 ? col : fallback.slice(0, Math.max(2, Math.ceil(featured.length / 4)));
-
-  const c1 = pad(col1, featured);
-  const c2 = pad(col2, featured);
-  const c3 = pad(col3, featured);
-  const c4 = pad(col4, featured);
+  const c1 = columnReviews(featured, 0, 4);
+  const c2 = columnReviews(featured, 1, 4);
+  const c3 = columnReviews(featured, 2, 4);
+  const c4 = columnReviews(featured, 3, 4);
 
   const openReview = (review: Review) => {
     setSelected(review);
@@ -203,50 +210,60 @@ export function TestimonialsMarquee() {
           align="center"
           className="mb-12"
           eyebrow="Loved by outbound teams"
-          title="Real teams. Real replies. Real revenue."
+          title={
+            <>
+              Real teams.
+              <br />
+              Real replies. Real revenue.
+            </>
+          }
           description="Text, audio, and video reviews — managed from the admin CMS, click any card to watch or listen."
         />
 
-        <div className="relative mx-auto flex h-[28rem] w-full flex-row items-center justify-center gap-4 overflow-hidden rounded-3xl border border-border bg-card/20 [perspective:300px] md:h-[32rem]">
+        <div className="group relative mx-auto flex h-[26rem] w-full flex-row items-stretch justify-center overflow-hidden rounded-[12px] border border-border bg-card/20 [perspective:900px] sm:h-[30rem] md:h-[34rem]">
           <div
-            className="flex flex-row items-center gap-4"
-            style={{
-              transform:
-                "translateX(-80px) translateY(0px) translateZ(-80px) rotateX(18deg) rotateY(-12deg) rotateZ(18deg)",
-            }}
+            className={cn(
+              "flex h-[220%] w-full origin-top flex-row items-start justify-center gap-3 sm:gap-5",
+              "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform",
+              /* Crop empty top: pull stage up + mild bottom→top lean */
+              "[transform:translateY(-12%)_rotateX(12deg)_translateZ(-20px)_scale(1.06)]",
+              "sm:[transform:translateY(-14%)_rotateX(18deg)_translateZ(-50px)_scale(1.08)]",
+              "group-hover:![transform:translateY(-4%)_rotateX(0deg)_translateZ(0)_scale(1.02)]",
+              "group-focus-within:![transform:translateY(-4%)_rotateX(0deg)_translateZ(0)_scale(1.02)]",
+            )}
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <Marquee pauseOnHover vertical className="h-[160%] [--duration:28s]">
-              {c1.map((review) => (
-                <ReviewCard key={`c1-${review.id}`} review={review} onOpen={openReview} />
+            <Marquee pauseOnHover vertical repeat={5} className="h-full w-auto shrink-0 p-0 [--duration:55s] [--gap:1.25rem]">
+              {c1.map((review, i) => (
+                <ReviewCard key={`c1-${review.id}-${i}`} review={review} onOpen={openReview} />
               ))}
             </Marquee>
-            <Marquee reverse pauseOnHover vertical className="h-[160%] [--duration:32s]">
-              {c2.map((review) => (
-                <ReviewCard key={`c2-${review.id}`} review={review} onOpen={openReview} />
+            <Marquee reverse pauseOnHover vertical repeat={5} className="h-full w-auto shrink-0 p-0 [--duration:62s] [--gap:1.25rem]">
+              {c2.map((review, i) => (
+                <ReviewCard key={`c2-${review.id}-${i}`} review={review} onOpen={openReview} />
               ))}
             </Marquee>
-            <Marquee pauseOnHover vertical className="hidden h-[160%] [--duration:26s] md:flex">
-              {c3.map((review) => (
-                <ReviewCard key={`c3-${review.id}`} review={review} onOpen={openReview} />
+            <Marquee pauseOnHover vertical repeat={5} className="hidden h-full w-auto shrink-0 p-0 [--duration:58s] [--gap:1.25rem] md:flex">
+              {c3.map((review, i) => (
+                <ReviewCard key={`c3-${review.id}-${i}`} review={review} onOpen={openReview} />
               ))}
             </Marquee>
-            <Marquee reverse pauseOnHover vertical className="hidden h-[160%] [--duration:34s] lg:flex">
-              {c4.map((review) => (
-                <ReviewCard key={`c4-${review.id}`} review={review} onOpen={openReview} />
+            <Marquee reverse pauseOnHover vertical repeat={5} className="hidden h-full w-auto shrink-0 p-0 [--duration:66s] [--gap:1.25rem] lg:flex">
+              {c4.map((review, i) => (
+                <ReviewCard key={`c4-${review.id}-${i}`} review={review} onOpen={openReview} />
               ))}
             </Marquee>
           </div>
 
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-background" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background" />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-background to-transparent sm:h-14" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent sm:w-14" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent sm:w-14" />
         </div>
 
         <div className="mt-10 flex justify-center">
           <Link
             to="/reviews"
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-medium text-primary-foreground shadow-glow transition hover:opacity-95"
+            className="inline-flex items-center gap-2 rounded-[12px] bg-gradient-brand px-6 py-3.5 text-sm font-medium text-primary-foreground shadow-glow transition hover:opacity-95"
           >
             Explore all reviews <ArrowRight className="h-4 w-4" />
           </Link>

@@ -47,7 +47,9 @@ export function GallerySection() {
           eyebrow="Gallery"
           title={
             <>
-              Moments from the <span className="text-gradient-brand">outbound floor</span>.
+              Moments from the
+              <br />
+              <span className="text-gradient-brand">outbound floor</span>.
             </>
           }
           description="A quick look at photos and videos from the team — explore the full gallery for everything."

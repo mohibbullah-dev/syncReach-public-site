@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowLeft, Mic, Play, Quote, Star, Type, Video } from "lucide-react";
 
@@ -68,7 +68,7 @@ function ReviewsPage() {
               type="button"
               onClick={() => setFilter(f.id)}
               className={cn(
-                "rounded-full border px-4 py-2 text-sm font-medium transition",
+                "rounded-[12px] border px-4 py-2 text-sm font-medium transition",
                 filter === f.id
                   ? "border-transparent bg-gradient-brand text-primary-foreground shadow-glow"
                   : "border-border bg-card/50 text-muted-foreground hover:text-foreground",
@@ -88,7 +88,7 @@ function ReviewsPage() {
                 setSelected(review);
                 setOpen(true);
               }}
-              className="rounded-2xl border border-border bg-card/60 p-5 text-left shadow-elevate transition hover:-translate-y-0.5 hover:border-brand/50 hover:shadow-glow"
+              className="rounded-[12px] border border-border bg-card/60 p-5 text-left shadow-elevate transition hover:-translate-y-0.5 hover:border-brand/50 hover:shadow-glow"
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -98,7 +98,7 @@ function ReviewsPage() {
                     <div className="text-xs text-muted-foreground">{review.role}</div>
                   </div>
                 </div>
-                <span className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+                <span className="inline-flex items-center gap-1 rounded-[12px] border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
                   <TypeIcon type={review.type} />
                   {review.type}
                 </span>
@@ -144,7 +144,7 @@ function ReviewsPage() {
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-lg gap-0 overflow-hidden p-0 sm:rounded-2xl">
+        <DialogContent className="max-w-lg gap-0 overflow-hidden p-0 sm:rounded-[12px]">
           {selected && (
             <>
               <div className="border-b border-border px-6 py-5">

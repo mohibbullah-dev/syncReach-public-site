@@ -1,20 +1,15 @@
 /** Seed pricing plans — API overrides when available. */
 
-export type PricingPlan = {
-  id: string;
-  badge: string;
-  name: string;
-  desc: string;
-  price: string;
-  unit: string;
-  extrasBadge: string;
-  extrasNote: string;
-  features: string[];
-  cta: string;
-  featured: boolean;
-  sortOrder: number;
-  published: boolean;
-};
+export type {
+  PricingPlan,
+  CustomConfig,
+  CustomLever,
+  PlanType,
+} from "@/lib/pricing-quote";
+export { defaultCustomConfig } from "@/lib/pricing-quote";
+
+import type { PricingPlan } from "@/lib/pricing-quote";
+import { defaultCustomConfig } from "@/lib/pricing-quote";
 
 export const pricingPlans: PricingPlan[] = [
   {
@@ -24,8 +19,8 @@ export const pricingPlans: PricingPlan[] = [
     desc: "For founders launching outbound and validating their offer.",
     price: "$500",
     unit: "/ month",
-    extrasBadge: "14-day free trial",
-    extrasNote: "No credit card required to start",
+    extrasBadge: "",
+    extrasNote: "",
     features: [
       "5,000 emails / mo",
       "5 warmed inboxes",
@@ -38,6 +33,7 @@ export const pricingPlans: PricingPlan[] = [
     featured: false,
     sortOrder: 1,
     published: true,
+    planType: "fixed",
   },
   {
     id: "p2",
@@ -61,27 +57,29 @@ export const pricingPlans: PricingPlan[] = [
     featured: true,
     sortOrder: 2,
     published: true,
+    planType: "fixed",
   },
   {
     id: "p3",
-    badge: "SCALE",
-    name: "Scale",
-    desc: "For agencies and outbound-heavy revenue teams.",
-    price: "$2,000",
+    badge: "CUSTOM",
+    name: "Custom",
+    desc: "Build your own outbound stack — pick volume, seats, and add-ons.",
+    price: "Custom",
     unit: "/ month",
-    extrasBadge: "Dedicated success manager",
-    extrasNote: "Custom SLAs and security review included",
+    extrasBadge: "",
+    extrasNote: "",
     features: [
-      "Unlimited emails",
-      "Unlimited seats & inboxes",
-      "Dedicated deliverability manager",
-      "Custom playbook training",
-      "Slack support",
-      "SLA + security review",
+      "Flexible email volume",
+      "Warmed inboxes on demand",
+      "Seats for your team",
+      "Optional LinkedIn outreach",
+      "Dedicated success support",
     ],
-    cta: "Talk to sales",
+    cta: "Get this quote",
     featured: false,
     sortOrder: 3,
     published: true,
+    planType: "custom",
+    customConfig: defaultCustomConfig(),
   },
 ];

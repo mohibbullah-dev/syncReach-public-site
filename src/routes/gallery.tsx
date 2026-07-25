@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 
@@ -59,7 +59,8 @@ function GalleryPage() {
               eyebrow="Gallery"
               title={
                 <>
-                  Moments from the{" "}
+                  Moments from the
+                  <br />
                   <span className="text-gradient-brand">outbound floor</span>.
                 </>
               }
@@ -73,7 +74,7 @@ function GalleryPage() {
                   type="button"
                   onClick={() => setFilter(f.id)}
                   className={cn(
-                    "rounded-full px-4 py-2 text-sm font-medium transition",
+                    "rounded-[12px] px-4 py-2 text-sm font-medium transition",
                     filter === f.id
                       ? "bg-gradient-brand text-primary-foreground shadow-glow"
                       : "border border-border bg-card/70 text-muted-foreground hover:text-foreground",
@@ -86,7 +87,7 @@ function GalleryPage() {
           </div>
 
           {filtered.length === 0 ? (
-            <div className="section-stack rounded-3xl border border-dashed border-border bg-card/40 px-6 py-16 text-center text-muted-foreground">
+            <div className="section-stack rounded-[12px] border border-dashed border-border bg-card/40 px-6 py-16 text-center text-muted-foreground">
               No gallery items yet. Upload photos or videos from the admin panel.
             </div>
           ) : (

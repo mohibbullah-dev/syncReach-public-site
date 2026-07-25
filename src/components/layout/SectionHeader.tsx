@@ -17,29 +17,46 @@ export function SectionHeader({
   eyebrow,
   title,
   description,
-  align = "left",
+  align = "center",
   width = "sm",
   className,
   as = "h2",
 }: SectionHeaderProps) {
   const Heading = as;
+  const centered = align === "center";
 
   return (
     <div
       className={cn(
         width === "sm" ? "max-w-2xl" : "max-w-3xl",
-        align === "center" && "mx-auto text-center",
+        centered && "mx-auto text-center",
         className,
       )}
     >
       {eyebrow ? (
-        <div className={typeof eyebrow === "string" || typeof eyebrow === "number" ? "section-eyebrow" : "mb-3"}>
-          {eyebrow}
+        <div className={cn("mb-3", centered && "flex justify-center")}>
+          {typeof eyebrow === "string" || typeof eyebrow === "number" ? (
+            <span className="section-eyebrow mb-0">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden />
+              {eyebrow}
+            </span>
+          ) : (
+            eyebrow
+          )}
         </div>
       ) : null}
-      <Heading className="text-3xl font-bold tracking-tight md:text-5xl">{title}</Heading>
+      <Heading className="text-balance text-3xl font-bold tracking-tight md:text-5xl">
+        {title}
+      </Heading>
       {description ? (
-        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{description}</p>
+        <p
+          className={cn(
+            "mt-4 text-lg leading-relaxed text-muted-foreground",
+            centered && "mx-auto",
+          )}
+        >
+          {description}
+        </p>
       ) : null}
     </div>
   );

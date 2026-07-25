@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Lock, Shield, Zap } from "lucide-react";
+﻿import { Check, ChevronRight, Lock, Shield, Zap } from "lucide-react";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { cn } from "@/lib/utils";
 
@@ -161,16 +161,12 @@ export function HowItWorks() {
       <div className="container-page relative">
         <SectionHeader
           width="md"
-          eyebrow={
-            <span className="inline-flex items-center gap-2 rounded-full bg-[oklch(0.55_0.18_255)]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[oklch(0.45_0.18_255)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.18_255)]" />
-              How it works
-            </span>
-          }
+          eyebrow="How it works"
           title={
             <>
-              From cold list to booked call in{" "}
-              <span className="text-[oklch(0.52_0.20_255)]">3 simple steps.</span>
+              From cold list to booked call
+              <br />
+              in <span className="text-[oklch(0.52_0.20_255)]">3 simple steps.</span>
             </>
           }
           description="A simple operating rhythm — no cluttered dashboards, no tool-hopping."
@@ -181,7 +177,7 @@ export function HowItWorks() {
             <div key={step.n} className="relative">
               <article
                 className={cn(
-                  "flex h-full flex-col rounded-[1.75rem] border border-border/70 bg-white p-7 shadow-[0_14px_40px_-24px_oklch(0.16_0.03_260_/_0.35)]",
+                  "flex h-full flex-col rounded-[12px] border border-border/70 bg-white p-7 shadow-[0_14px_40px_-24px_oklch(0.16_0.03_260_/_0.35)]",
                   step.theme.border,
                 )}
               >
@@ -191,7 +187,7 @@ export function HowItWorks() {
                   </div>
                   <span
                     className={cn(
-                      "rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]",
+                      "rounded-[12px] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]",
                       step.theme.badge,
                     )}
                   >
@@ -202,7 +198,7 @@ export function HowItWorks() {
                 <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
 
-                <div className={cn("mt-6 flex h-36 items-center justify-center rounded-2xl", step.theme.soft)}>
+                <div className={cn("mt-6 flex h-36 items-center justify-center rounded-[12px]", step.theme.soft)}>
                   <div className="h-full w-full max-w-[220px]">{step.art}</div>
                 </div>
 
@@ -232,7 +228,7 @@ export function HowItWorks() {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-0 overflow-hidden rounded-[1.5rem] border border-border/70 bg-[oklch(0.97_0.008_250)] md:grid-cols-3">
+        <div className="mt-10 grid gap-0 overflow-hidden rounded-[12px] border border-border/70 bg-[oklch(0.97_0.008_250)] md:grid-cols-3">
           {bottomItems.map((item, i) => {
             const Icon = item.icon;
             return (

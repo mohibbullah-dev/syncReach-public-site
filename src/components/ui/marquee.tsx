@@ -38,12 +38,12 @@ export function Marquee({
           <div
             key={i}
             className={cn(
-              "flex shrink-0 justify-around [gap:var(--gap)]",
-              // Keep each track at least full-width so few cards don't sit flush-left
-              vertical ? "min-h-full" : "min-w-full",
+              "flex shrink-0 [gap:var(--gap)] will-change-transform [backface-visibility:hidden]",
+              // Horizontal: fill width. Vertical: pack from the start (no justify-around gaps at the top)
+              vertical ? "min-h-full flex-col justify-start" : "min-w-full flex-row justify-around",
               {
-                "animate-marquee flex-row": !vertical,
-                "animate-marquee-vertical flex-col": vertical,
+                "animate-marquee": !vertical,
+                "animate-marquee-vertical": vertical,
                 "group-hover:[animation-play-state:paused]": pauseOnHover,
                 "[animation-direction:reverse]": reverse,
               },

@@ -1,4 +1,4 @@
-import { Image as ImageIcon, Play, Video } from "lucide-react";
+﻿import { Image as ImageIcon, Play, Video } from "lucide-react";
 
 import {
   Dialog,
@@ -26,7 +26,7 @@ export function GalleryTile({
       type="button"
       onClick={() => onOpen(item)}
       className={cn(
-        "group relative overflow-hidden rounded-3xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "group relative overflow-hidden rounded-[12px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "bg-card shadow-elevate ring-1 ring-border/80 transition duration-500",
         "hover:-translate-y-1 hover:shadow-glow hover:ring-brand/35",
         className,
@@ -48,7 +48,7 @@ export function GalleryTile({
       )}
 
       <div className="absolute inset-x-0 bottom-0 translate-y-1 p-4 opacity-95 transition duration-500 group-hover:translate-y-0 md:p-5">
-        <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white/90 backdrop-blur">
+        <div className="mb-2 inline-flex items-center gap-1.5 rounded-[12px] border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white/90 backdrop-blur">
           {item.type === "video" ? <Video className="h-3 w-3" /> : <ImageIcon className="h-3 w-3" />}
           {item.type}
         </div>
@@ -72,7 +72,7 @@ export function GalleryLightbox({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl gap-0 overflow-hidden border-border p-0 sm:rounded-3xl">
+      <DialogContent className="max-w-3xl gap-0 overflow-hidden border-border p-0 sm:rounded-[12px]">
         <div className="border-b border-border px-5 py-4 md:px-6">
           <DialogHeader className="text-left">
             <DialogTitle className="text-lg">{item.title}</DialogTitle>
@@ -87,14 +87,14 @@ export function GalleryLightbox({
               autoPlay
               playsInline
               poster={item.thumbnailUrl}
-              className="aspect-video w-full rounded-2xl border border-border bg-black object-cover"
+              className="aspect-video w-full rounded-[12px] border border-border bg-black object-cover"
               src={item.src}
             />
           ) : (
             <img
               src={item.src}
               alt={item.title}
-              className="max-h-[70vh] w-full rounded-2xl border border-border bg-background object-contain"
+              className="max-h-[70vh] w-full rounded-[12px] border border-border bg-background object-contain"
             />
           )}
         </div>

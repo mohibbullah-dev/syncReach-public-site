@@ -123,7 +123,7 @@ function AdminCta({
     <a
       href={state.href}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 rounded-full border border-brand/25 bg-white/90 font-semibold text-brand shadow-sm backdrop-blur-sm transition",
+        "inline-flex items-center justify-center gap-1.5 rounded-[12px] border border-brand/25 bg-white/90 font-semibold text-brand shadow-sm backdrop-blur-sm transition",
         "hover:border-brand/40 hover:bg-brand/5 hover:shadow-md",
         compact ? "px-3 py-2 text-xs" : "px-4 py-2.5 text-sm",
         className,
@@ -166,7 +166,7 @@ export function SiteNavbar() {
           className={cn(
             "hidden items-center gap-1 transition-all duration-300 lg:flex",
             scrolled
-              ? "rounded-full border border-border/70 bg-white/80 p-1 shadow-sm backdrop-blur-md"
+              ? "rounded-[12px] border border-border/70 bg-white/80 p-1 shadow-sm backdrop-blur-md"
               : "bg-transparent",
           )}
         >
@@ -177,7 +177,7 @@ export function SiteNavbar() {
                 key={link.id}
                 href={link.homeHash}
                 className={cn(
-                  "relative rounded-full px-3 py-2 text-[13px] font-medium transition-colors duration-200 xl:px-3.5 xl:text-sm",
+                  "relative rounded-[12px] px-3 py-2 text-[13px] font-medium transition-colors duration-200 xl:px-3.5 xl:text-sm",
                   isActive
                     ? "bg-brand/10 text-brand"
                     : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
@@ -199,7 +199,7 @@ export function SiteNavbar() {
           </a>
           <a
             href="/#pricing"
-            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95 hover:shadow-[0_12px_28px_-12px_oklch(0.58_0.22_260_/_0.65)]"
+            className="inline-flex items-center gap-1.5 rounded-[12px] bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95 hover:shadow-[0_12px_28px_-12px_oklch(0.58_0.22_260_/_0.65)]"
           >
             Book a demo
             <ArrowRight className="h-4 w-4" />
@@ -212,7 +212,7 @@ export function SiteNavbar() {
           ) : null}
           <a
             href="/#pricing"
-            className="hidden items-center rounded-full bg-gradient-brand px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-glow sm:inline-flex"
+            className="hidden items-center rounded-[12px] bg-gradient-brand px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-glow sm:inline-flex"
           >
             Book a demo
           </a>
@@ -223,7 +223,7 @@ export function SiteNavbar() {
                 type="button"
                 aria-label="Open menu"
                 className={cn(
-                  "inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card/80 text-foreground shadow-sm backdrop-blur transition",
+                  "inline-flex h-10 w-10 items-center justify-center rounded-[12px] border border-border bg-card/80 text-foreground shadow-sm backdrop-blur transition",
                   "hover:border-brand/40 hover:bg-brand/5 active:scale-95",
                 )}
               >

@@ -1,18 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+﻿import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
-  ArrowRight, Check, Mail, Phone, MapPin, Sparkles,
-  TrendingUp, Users, Inbox, Facebook, Linkedin,
-  Plus, Minus,
+  ArrowRight, Check, Mail, Phone, MapPin, Calendar,
+  BadgeDollarSign, Trophy, FileCheck2, Users,
+  Facebook, Linkedin, Plus, Minus,
 } from "lucide-react";
-import costOfWaitingUrl from "@/assets/cost-of-waiting.png";
 import { TestimonialsMarquee } from "@/components/reviews/TestimonialsMarquee";
 import { GallerySection } from "@/components/gallery/GallerySection";
 import { FeaturesBento } from "@/components/features/FeaturesBento";
+import { HeroVideo } from "@/components/sections/HeroVideo";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SectionHeader } from "@/components/layout/SectionHeader";
+import { CustomPricingCard } from "@/components/pricing/CustomPricingCard";
 import { submitContactMessage } from "@/lib/api";
+import { QUOTE_STORAGE_KEY } from "@/lib/pricing-quote";
 import { usePublicPricing, usePublicTeam } from "@/lib/use-public-content";
 
 
@@ -37,52 +39,67 @@ function LandingPage() {
   );
 }
 
-/* ---------- HERO (Attention) ---------- */
+/* ---------- HERO (Attention) — reference structure, SyncReach colors ---------- */
+const HERO_TRUST = [
+  { icon: BadgeDollarSign, label: "Affordable Pricing" },
+  { icon: Trophy, label: "Proven Results" },
+  { icon: FileCheck2, label: "No Long-Term Contract" },
+] as const;
+
 function Hero() {
   return (
-    <section id="top" className="relative section-y-hero bg-hero-glow">
-      <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1.5 text-xs font-medium backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5 text-brand-glow" />
-            <span className="text-muted-foreground">B2B cold outreach · Built for 2026</span>
+    <section id="top" className="relative overflow-x-clip section-y-hero bg-hero-glow">
+      <div className="container-page grid items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+        <div className="mx-auto w-full max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
+          <div className="mb-4 inline-flex max-w-full items-center gap-2 rounded-[12px] border border-brand/20 bg-brand/5 px-3 py-1.5 shadow-sm sm:mb-6 sm:gap-2.5 sm:px-3.5">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-brand" />
+            <span className="text-left text-[10px] font-extrabold uppercase leading-snug tracking-[0.06em] text-brand sm:text-xs sm:tracking-[0.1em]">
+              <span className="sm:hidden">#1 B2B Outbound Agency</span>
+              <span className="hidden sm:inline">#1 B2B Outbound Lead Generation Agency</span>
+            </span>
           </div>
-          <h1 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-            Cold outreach that <span className="text-gradient-brand">books meetings</span> while you sleep.
+
+          <h1 className="font-display text-[clamp(1.55rem,6.4vw,4.35rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground">
+            <span className="block whitespace-nowrap">
+              We bring <span className="text-brand">the leads.</span>
+            </span>
+            <span className="mt-0.5 block whitespace-nowrap sm:mt-1">
+              You close the deal.
+            </span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            SyncReach finds your ideal prospects, warms up your inboxes, personalizes every email, and delivers reply-ready conversations to your calendar. Sync today, reach tomorrow.
+
+          <p className="mx-auto mt-4 max-w-[34ch] text-[0.9375rem] font-medium leading-relaxed text-foreground/80 sm:mt-6 sm:max-w-md sm:text-base md:text-lg lg:mx-0 lg:max-w-lg">
+            We help B2B businesses build qualified sales pipelines through strategic cold
+            email and LinkedIn outreach — powered by AI-driven personalisation, lead
+            qualification, and appointment setting.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#pricing" className="inline-flex items-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 font-medium text-primary-foreground shadow-glow transition hover:opacity-95">
-              Start booking meetings <ArrowRight className="h-4 w-4" />
-            </a>
-            <a href="#features" className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/40 px-6 py-3.5 font-medium backdrop-blur transition hover:bg-card">
-              See how it works
+
+          <div className="mt-6 flex justify-center sm:mt-7 lg:justify-start">
+            <a
+              href="#contact"
+              className="inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-[12px] bg-brand px-6 py-3.5 text-[15px] font-semibold text-primary-foreground shadow-glow transition hover:bg-brand-deep active:scale-[0.98] sm:w-auto sm:max-w-none sm:px-7"
+            >
+              <Calendar className="h-[18px] w-[18px] shrink-0" strokeWidth={2.25} />
+              Book a Free Call
             </a>
           </div>
+
+          <ul className="mx-auto mt-7 grid w-full max-w-xs grid-cols-1 gap-2.5 sm:mt-8 sm:max-w-none sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-5 sm:gap-y-3 lg:mx-0 lg:justify-start lg:gap-x-6">
+            {HERO_TRUST.map(({ icon: Icon, label }, i) => (
+              <li key={label} className="flex items-center justify-center gap-2 sm:justify-start sm:gap-5 lg:gap-6">
+                {i > 0 ? (
+                  <span className="hidden h-4 w-px bg-border sm:block" aria-hidden />
+                ) : null}
+                <span className="inline-flex items-center gap-2 rounded-[12px] border border-border/70 bg-white/70 px-3 py-2 text-[13px] font-medium text-foreground/80 sm:border-0 sm:bg-transparent sm:p-0 sm:text-sm">
+                  <Icon className="h-4 w-4 shrink-0 text-brand" strokeWidth={2.25} />
+                  {label}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Hero visual — Cost of Waiting campaign */}
-        <div className="relative">
-          <div className="absolute -inset-8 bg-gradient-brand opacity-25 blur-3xl rounded-full" />
-          <div className="relative animate-float">
-            <img
-              src={costOfWaitingUrl}
-              alt="The cost of waiting — every day you delay, opportunities move on"
-              className="w-full max-w-lg mx-auto rounded-3xl shadow-elevate ring-1 ring-white/10"
-            />
-          </div>
-          <div className="absolute -left-4 top-8 hidden md:block rounded-2xl border border-border bg-card/90 backdrop-blur px-4 py-3 shadow-elevate">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground"><Inbox className="w-3.5 h-3.5 text-brand-glow" /> New reply</div>
-            <div className="text-sm font-medium mt-1">"Let's book a call this week."</div>
-          </div>
-          <div className="absolute -right-2 bottom-6 hidden md:block rounded-2xl border border-border bg-card/90 backdrop-blur px-4 py-3 shadow-elevate">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground"><TrendingUp className="w-3.5 h-3.5 text-brand-glow" /> Reply rate</div>
-            <div className="text-2xl font-bold text-gradient-brand">+312%</div>
-          </div>
-        </div>
-
+        <HeroVideo className="w-full" />
       </div>
     </section>
   );
@@ -99,81 +116,96 @@ function Pricing() {
           align="center"
           width="md"
           eyebrow="Simple pricing"
-          title="Pick a plan. Book meetings this week."
-          description="Every plan includes a 14-day free trial. No credit card required."
+          title={
+            <>
+              Pick a plan.
+              <br />
+              Book meetings this week.
+            </>
+          }
         />
 
-        <div className="section-stack grid items-stretch gap-6 md:grid-cols-3">
-          {plans.map((p) => (
-            <div
-              key={p.id || p.name}
-              className={`group relative flex flex-col overflow-hidden rounded-[1.75rem] bg-background p-8 transition duration-300 hover:-translate-y-1 ${
-                p.featured
-                  ? "border-2 border-brand shadow-glow ring-4 ring-brand/10"
-                  : "border border-border shadow-elevate hover:border-brand/30 hover:shadow-glow"
-              }`}
-            >
-              {p.featured ? (
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-brand/10 to-transparent" />
-              ) : null}
-
+        <div className="section-stack grid items-start gap-5 md:grid-cols-3">
+          {plans.map((p) =>
+            p.planType === "custom" ? (
+              <CustomPricingCard key={p.id || p.name} plan={p} />
+            ) : (
               <div
-                className={`relative inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-semibold tracking-wider ${
+                key={p.id || p.name}
+                className={`group relative flex flex-col overflow-hidden rounded-[12px] bg-background p-5 transition duration-300 hover:-translate-y-1 sm:p-6 ${
                   p.featured
-                    ? "bg-brand text-primary-foreground shadow-sm"
-                    : "bg-muted text-muted-foreground"
+                    ? "border-2 border-brand shadow-glow ring-4 ring-brand/10"
+                    : "border border-border shadow-elevate hover:border-brand/30 hover:shadow-glow"
                 }`}
               >
-                {p.badge}
-              </div>
+                {p.featured ? (
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-brand/10 to-transparent" />
+                ) : null}
 
-              <h3 className="relative mt-5 text-2xl font-bold tracking-tight">{p.name}</h3>
-              <p className="relative mt-2 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
-
-              <div className="relative mt-6 flex items-end gap-2">
-                <span className="text-5xl font-bold tracking-tight">{p.price}</span>
-                <span className="mb-1.5 text-sm text-muted-foreground">{p.unit}</span>
-              </div>
-
-              <div
-                className={`relative mt-4 inline-flex w-fit rounded-lg px-3 py-1.5 text-xs font-semibold ${
-                  p.featured
-                    ? "bg-brand/15 text-brand"
-                    : "bg-muted text-foreground/80"
-                }`}
-              >
-                {p.extrasBadge}
-              </div>
-              <p className="relative mt-2 text-xs text-muted-foreground">{p.extrasNote}</p>
-
-              <a
-                href="#contact"
-                className={`relative mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-semibold transition ${
-                  p.featured
-                    ? "bg-gradient-brand text-primary-foreground shadow-glow hover:opacity-95"
-                    : "border border-border bg-card text-foreground group-hover:border-brand/40 group-hover:bg-brand/5"
-                }`}
-              >
-                {p.cta} <ArrowRight className="h-4 w-4" />
-              </a>
-
-              <div className="relative mt-8 border-t border-border pt-6">
-                <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                  What&apos;s included
+                <div
+                  className={`relative inline-flex w-fit rounded-[12px] px-2.5 py-0.5 text-[10px] font-semibold tracking-wider ${
+                    p.featured
+                      ? "bg-brand text-primary-foreground shadow-sm"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {p.badge}
                 </div>
-                <ul className="space-y-3">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm text-foreground/80">
-                      <span className="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-brand">
-                        <Check className="h-2.5 w-2.5 text-primary-foreground" strokeWidth={3} />
-                      </span>
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
+
+                <h3 className="relative mt-3 text-xl font-bold tracking-tight">{p.name}</h3>
+                <p className="relative mt-1 text-sm leading-snug text-muted-foreground">{p.desc}</p>
+
+                <div className="relative mt-4 flex items-end gap-1.5">
+                  <span className="text-3xl font-bold tracking-tight sm:text-4xl">{p.price}</span>
+                  <span className="mb-1 text-xs text-muted-foreground">{p.unit}</span>
+                </div>
+
+                {p.extrasBadge ? (
+                  <div
+                    className={`relative mt-3 inline-flex w-fit rounded-lg px-2.5 py-1 text-xs font-semibold ${
+                      p.featured
+                        ? "bg-brand/15 text-brand"
+                        : "bg-muted text-foreground/80"
+                    }`}
+                  >
+                    {p.extrasBadge}
+                  </div>
+                ) : null}
+                {p.extrasNote ? (
+                  <p className="relative mt-1 text-[11px] leading-snug text-muted-foreground">
+                    {p.extrasNote}
+                  </p>
+                ) : null}
+
+                <a
+                  href="#contact"
+                  className={`relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+                    p.featured
+                      ? "bg-gradient-brand text-primary-foreground shadow-glow hover:opacity-95"
+                      : "border border-border bg-card text-foreground group-hover:border-brand/40 group-hover:bg-brand/5"
+                  }`}
+                >
+                  {p.cta} <ArrowRight className="h-4 w-4" />
+                </a>
+
+                <div className="relative mt-4 border-t border-border pt-3">
+                  <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    What&apos;s included
+                  </div>
+                  <ul className="space-y-1.5">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-xs text-foreground/80 sm:text-sm">
+                        <span className="mt-0.5 flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center rounded-full bg-brand">
+                          <Check className="h-2 w-2 text-primary-foreground" strokeWidth={3} />
+                        </span>
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
       </div>
     </section>
@@ -189,16 +221,18 @@ function Team() {
         <SectionHeader
           align="center"
           className="mb-12"
-          eyebrow={
-            <span className="inline-flex items-center justify-center gap-2 text-sm font-medium text-brand-glow">
-              <Users className="h-4 w-4" /> The team
-            </span>
+          eyebrow="The team"
+          title={
+            <>
+              Built by outbound
+              <br />
+              operators, for outbound teams.
+            </>
           }
-          title="Built by outbound operators, for outbound teams."
         />
         <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
           {team.map((m) => (
-            <div key={m.id} className="group rounded-3xl border border-border bg-card/50 p-6 text-center transition-all hover:border-brand/50 hover:shadow-glow">
+            <div key={m.id} className="group rounded-[12px] border border-border bg-card/50 p-6 text-center transition-all hover:border-brand/50 hover:shadow-glow">
               <div className="relative mx-auto h-40 w-40">
                 <div className="absolute inset-0 rounded-full bg-gradient-brand opacity-40 blur-xl transition group-hover:opacity-70" />
                 {m.img ? (
@@ -231,6 +265,26 @@ function Team() {
 function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  const applyQuotePrefill = () => {
+    try {
+      const stored = sessionStorage.getItem(QUOTE_STORAGE_KEY);
+      if (stored) {
+        setMessage(stored);
+        sessionStorage.removeItem(QUOTE_STORAGE_KEY);
+      }
+    } catch {
+      /* ignore */
+    }
+  };
+
+  useEffect(() => {
+    applyQuotePrefill();
+    const onQuote = () => applyQuotePrefill();
+    window.addEventListener("syncreach:quote-prefill", onQuote);
+    return () => window.removeEventListener("syncreach:quote-prefill", onQuote);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -246,6 +300,7 @@ function Contact() {
         message: String(data.get("message") || ""),
       });
       form.reset();
+      setMessage("");
       setStatus("ok");
     } catch (err) {
       setStatus("error");
@@ -258,20 +313,31 @@ function Contact() {
       <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <SectionHeader
+            align="left"
             eyebrow="Get in touch"
-            title="Ready to fill your pipeline?"
+            title={
+              <>
+                Ready to fill
+                <br />
+                your pipeline?
+              </>
+            }
             description="Send a message and our team will get back within 24 hours."
           />
 
           <div className="mt-8 space-y-4">
-            <ContactRow icon={Mail} label="Email us" values={["safiq3d@gmail.com"]} />
+            <ContactRow
+              icon={Mail}
+              label="Email us"
+              values={["safiq3d@gmail.com", "sabidkhan@syncrech.com"]}
+            />
             <ContactRow icon={Phone} label="Call us" values={["+880 1315 121758"]} />
             <ContactRow icon={MapPin} label="Visit us" values={["Faridpur, Dhaka, Bangladesh"]} />
           </div>
         </div>
 
         <form
-          className="space-y-4 rounded-3xl border border-border bg-background p-6 shadow-elevate md:p-8"
+          className="space-y-4 rounded-[12px] border border-border bg-background p-6 shadow-elevate md:p-8"
           onSubmit={(e) => void onSubmit(e)}
         >
           <div className="grid gap-4 sm:grid-cols-2">
@@ -284,7 +350,9 @@ function Contact() {
             <textarea
               name="message"
               required
-              rows={4}
+              rows={6}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               placeholder="Tell us about your outreach goals…"
               className="mt-1.5 w-full resize-none rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none transition focus:border-brand"
             />
@@ -315,7 +383,7 @@ function Contact() {
 
 function ContactRow({ icon: Icon, label, values }: { icon: typeof Mail; label: string; values: string[] }) {
   return (
-    <div className="flex gap-4 items-start rounded-2xl border border-border bg-background p-4">
+    <div className="flex gap-4 items-start rounded-[12px] border border-border bg-background p-4">
       <div className="w-10 h-10 rounded-xl bg-gradient-brand flex items-center justify-center shadow-glow flex-shrink-0">
         <Icon className="w-5 h-5 text-primary-foreground" />
       </div>
@@ -372,13 +440,19 @@ function FAQ() {
             align="center"
             className="mb-12"
             eyebrow="FAQ"
-            title="Answers before you ask."
+            title={
+              <>
+                Answers before
+                <br />
+                you ask.
+              </>
+            }
           />
           <div className="space-y-3">
             {items.map((it, i) => {
               const isOpen = open === i;
               return (
-                <div key={it.q} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                <div key={it.q} className="overflow-hidden rounded-[12px] border border-border bg-card shadow-sm">
                   <button
                     onClick={() => setOpen(isOpen ? null : i)}
                     className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
