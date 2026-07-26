@@ -158,3 +158,32 @@ export function buildQuoteMessage(
 }
 
 export const QUOTE_STORAGE_KEY = "syncreach_custom_quote_message";
+
+/** True when a plan should render the quote builder (API or seed). */
+export function isCustomPricingPlan(plan: Pick<PricingPlan, "planType" | "customConfig" | "badge" | "name" | "price">) {
+  if (plan.planType === "custom") return true;
+  if (plan.customConfig?.levers?.length) return true;
+  const badge = (plan.badge || "").trim().toLowerCase();
+  const name = (plan.name || "").trim().toLowerCase();
+  const price = (plan.price || "").trim().toLowerCase();
+  return badge === "custom" || name === "custom" || price === "custom";
+}
+
+/** Ensure custom plans always have a usable config after API load. */
+export function normalizePricingPlan(plan: PricingPlan): PricingPlan {
+  if (!isCustomPricingPlan(plan)) {
+    return { ...plan, planType: plan.planType === "custom" ? "custom" : "fixed" };
+  }
+  const customConfig =
+    plan.customConfig?.levers?.length ? plan.customConfig : defaultCustomConfig();
+  return {
+    ...plan,
+    planType: "custom",
+    customConfig,
+    price: plan.price?.trim() ? plan.price : "Custom",
+  };
+}
+
+export function normalizePricingPlans(plans: PricingPlan[]): PricingPlan[] {
+  return plans.map(normalizePricingPlan);
+}

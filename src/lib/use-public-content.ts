@@ -11,6 +11,7 @@ import { pricingPlans as seedPricing, type PricingPlan } from "@/data/pricing";
 import { reviews as seedReviews, type Review } from "@/data/reviews";
 import { teamMembers as seedTeam, type TeamMember } from "@/data/team";
 import { sanitizeProfileImage } from "@/lib/profile-image";
+import { normalizePricingPlans } from "@/lib/pricing-quote";
 
 function withFallback<T>(promise: Promise<T>, fallback: T): Promise<T> {
   return promise.catch((err) => {
@@ -105,7 +106,9 @@ export function usePublicTeam() {
 
 export function usePublicPricing() {
   const [items, setItems] = useState<PricingPlan[]>(() =>
-    seedPricing.filter((p) => p.published).sort((a, b) => a.sortOrder - b.sortOrder),
+    normalizePricingPlans(
+      seedPricing.filter((p) => p.published).sort((a, b) => a.sortOrder - b.sortOrder),
+    ),
   );
   const [loading, setLoading] = useState(true);
 
@@ -117,9 +120,11 @@ export function usePublicPricing() {
     ).then((list) => {
       if (!cancelled) {
         setItems(
-          list
-            .filter((p) => p.published !== false)
-            .sort((a, b) => a.sortOrder - b.sortOrder),
+          normalizePricingPlans(
+            list
+              .filter((p) => p.published !== false)
+              .sort((a, b) => a.sortOrder - b.sortOrder),
+          ),
         );
         setLoading(false);
       }

@@ -14,7 +14,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { CustomPricingCard } from "@/components/pricing/CustomPricingCard";
 import { submitContactMessage } from "@/lib/api";
-import { QUOTE_STORAGE_KEY } from "@/lib/pricing-quote";
+import { isCustomPricingPlan, QUOTE_STORAGE_KEY } from "@/lib/pricing-quote";
 import { usePublicPricing, usePublicTeam } from "@/lib/use-public-content";
 
 
@@ -127,7 +127,7 @@ function Pricing() {
 
         <div className="section-stack grid items-start gap-5 md:grid-cols-3">
           {plans.map((p) =>
-            p.planType === "custom" ? (
+            p.planType === "custom" || isCustomPricingPlan(p) ? (
               <CustomPricingCard key={p.id || p.name} plan={p} />
             ) : (
               <div
