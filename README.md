@@ -8,11 +8,11 @@ Standalone marketing website — deploy this repo alone on **Render** or **Verce
 npm install
 cp .env.example .env
 # VITE_API_URL=http://localhost:5000/api
-# VITE_ADMIN_URL=https://sync-reach-portal-two.vercel.app
+# VITE_ADMIN_URL=https://admin.syncreachai.com
 npm run dev            # http://localhost:8080
 ```
 
-Live: [public site](https://sync-reach-public-site.vercel.app/) · [portal](https://sync-reach-portal-two.vercel.app/)
+Live: [public site](https://syncreachai.com/) · [portal](https://admin.syncreachai.com/)
 
 ## Scripts
 
@@ -35,5 +35,5 @@ Live: [public site](https://sync-reach-public-site.vercel.app/) · [portal](http
 2. Leave Output Directory empty (not `dist`)
 3. Env:
    - `VITE_API_URL` = `https://YOUR-API.onrender.com/api`
-   - `VITE_ADMIN_URL` = `https://sync-reach-portal-two.vercel.app`
+   - `VITE_ADMIN_URL` = `https://admin.syncreachai.com`
 4. Push latest (`vercel.json` + vite vercel preset) then Redeploy
