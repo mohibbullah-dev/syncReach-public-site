@@ -72,8 +72,8 @@ function TipLink({
 }
 
 export function SiteFooter() {
-  const year = new Date().getFullYear();
-
+  // const year = new Date().getFullYear();
+const year = 2024
   return (
     <TooltipProvider delayDuration={200}>
       <footer className="relative overflow-hidden bg-[oklch(0.985_0.008_250)] pt-10 pb-6 md:pt-12 md:pb-8">

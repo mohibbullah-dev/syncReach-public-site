@@ -118,7 +118,7 @@ const steps: Array<{
     n: "02",
     tip: "Execution",
     title: "Launch outreach sequences",
-    desc: "We write, personalize, and send from warmed-up inboxes — no spam, all inbox.",
+    desc: "We write, personalize, and send from warmed up inboxes, no spam, all inbox.",
     points: ["Personalized at scale", "Warmed-up inboxes", "Deliverability built-in"],
     theme: themes.violet,
     art: <IlluExecution />,
@@ -134,26 +134,26 @@ const steps: Array<{
   },
 ];
 
-const bottomItems = [
-  {
-    title: "Built for deliverability",
-    desc: "Warm-up and inbox health stay on so your emails land where they should.",
-    icon: Shield,
-    theme: themes.blue,
-  },
-  {
-    title: "Enterprise-grade security",
-    desc: "Access controls and safe sending practices for serious outbound teams.",
-    icon: Lock,
-    theme: themes.violet,
-  },
-  {
-    title: "Save time, book more",
-    desc: "Less tool-hopping. More time talking to people who already replied.",
-    icon: Zap,
-    theme: themes.green,
-  },
-];
+// const bottomItems = [
+//   {
+//     title: "Built for deliverability",
+//     desc: "Warm up and inbox health stay on so your emails land where they should.",
+//     icon: Shield,
+//     theme: themes.blue,
+//   },
+//   {
+//     title: "Enterprise grade security",
+//     desc: "Access controls and safe sending practices for serious outbound teams.",
+//     icon: Lock,
+//     theme: themes.violet,
+//   },
+//   {
+//     title: "Save time, book more",
+//     desc: "Less tool hopping. More time talking to people who already replied.",
+//     icon: Zap,
+//     theme: themes.green,
+//   },
+// ];
 
 export function HowItWorks() {
   return (
@@ -169,7 +169,7 @@ export function HowItWorks() {
               in <span className="text-[oklch(0.52_0.20_255)]">3 simple steps.</span>
             </>
           }
-          description="A simple operating rhythm — no cluttered dashboards, no tool-hopping."
+          description="A simple operating rhythm, no cluttered dashboards, no tool hopping."
         />
 
         <div className="section-stack relative grid gap-6 md:grid-cols-3">
@@ -228,7 +228,7 @@ export function HowItWorks() {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-0 overflow-hidden rounded-[12px] border border-border/70 bg-[oklch(0.97_0.008_250)] md:grid-cols-3">
+        {/* <div className="mt-10 grid gap-0 overflow-hidden rounded-[12px] border border-border/70 bg-[oklch(0.97_0.008_250)] md:grid-cols-3">
           {bottomItems.map((item, i) => {
             const Icon = item.icon;
             return (
@@ -254,7 +254,7 @@ export function HowItWorks() {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </section>
   );

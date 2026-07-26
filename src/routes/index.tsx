@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import {
   ArrowRight, Check, Mail, Phone, MapPin, Calendar,
   BadgeDollarSign, Trophy, FileCheck2, Users,
-  Facebook, Linkedin, Plus, Minus,
+  Facebook, Linkedin,
 } from "lucide-react";
 import { TestimonialsMarquee } from "@/components/reviews/TestimonialsMarquee";
 import { GallerySection } from "@/components/gallery/GallerySection";
 import { FeaturesBento } from "@/components/features/FeaturesBento";
 import { HeroVideo } from "@/components/sections/HeroVideo";
 import { HowItWorks } from "@/components/sections/HowItWorks";
+import { FaqSection } from "@/components/sections/FaqSection";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { CustomPricingCard } from "@/components/pricing/CustomPricingCard";
@@ -33,7 +34,7 @@ function LandingPage() {
       <Pricing />
       <Team />
       <Contact />
-      <FAQ />
+      <FaqSection />
       <SiteFooter />
     </div>
   );
@@ -70,7 +71,7 @@ function Hero() {
 
           <p className="mx-auto mt-4 max-w-[34ch] text-[0.9375rem] font-medium leading-relaxed text-foreground/80 sm:mt-6 sm:max-w-md sm:text-base md:text-lg lg:mx-0 lg:max-w-lg">
             We help B2B businesses build qualified sales pipelines through strategic cold
-            email and LinkedIn outreach — powered by AI-driven personalisation, lead
+            email and LinkedIn outreach, powered by AI driven personalisation, lead
             qualification, and appointment setting.
           </p>
 
@@ -80,7 +81,7 @@ function Hero() {
               className="inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-[12px] bg-brand px-6 py-3.5 text-[15px] font-semibold text-primary-foreground shadow-glow transition hover:bg-brand-deep active:scale-[0.98] sm:w-auto sm:max-w-none sm:px-7"
             >
               <Calendar className="h-[18px] w-[18px] shrink-0" strokeWidth={2.25} />
-              Book a Free Call
+              Book a Free Consultation
             </a>
           </div>
 
@@ -359,7 +360,7 @@ function Contact() {
           </div>
           {status === "ok" && (
             <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
-              Thanks — your message was sent. We&apos;ll be in touch shortly.
+              Thanks, your message was sent. We&apos;ll be in touch shortly.
             </p>
           )}
           {status === "error" && (
@@ -422,55 +423,3 @@ function Field({
   );
 }
 
-/* ---------- FAQ ---------- */
-function FAQ() {
-  const items = [
-    { q: "How fast can SyncReach launch our first campaign?", a: "Most clients are live within 14 days. Infrastructure setup and warm-up takes the first 10, copy and targeting the rest." },
-    { q: "What kind of reply rates should we expect?", a: "Well-targeted campaigns average 8–15% reply rates in the first 60 days, with positive replies typically 2–4% of sends." },
-    { q: "Do you handle deliverability and inbox warm-up?", a: "Yes — every inbox is warmed on our private network and monitored 24/7 so your sends land in the primary inbox, not spam." },
-    { q: "Which industries do you specialize in?", a: "B2B SaaS, agencies, professional services, and fintech. If your ACV is above $2k, we can build a pipeline for you." },
-    { q: "What if it doesn't work?", a: "We work in 90-day cycles with clear KPIs. If we miss the target, we keep working — at no extra cost — until we hit it." },
-  ];
-  const [open, setOpen] = useState<number | null>(0);
-  return (
-    <section id="faq" className="section-y">
-      <div className="container-page">
-        <div className="mx-auto max-w-3xl">
-          <SectionHeader
-            align="center"
-            className="mb-12"
-            eyebrow="FAQ"
-            title={
-              <>
-                Answers before
-                <br />
-                you ask.
-              </>
-            }
-          />
-          <div className="space-y-3">
-            {items.map((it, i) => {
-              const isOpen = open === i;
-              return (
-                <div key={it.q} className="overflow-hidden rounded-[12px] border border-border bg-card shadow-sm">
-                  <button
-                    onClick={() => setOpen(isOpen ? null : i)}
-                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
-                  >
-                    <span className="text-base font-semibold md:text-lg">{it.q}</span>
-                    {isOpen ? <Minus className="h-5 w-5 flex-shrink-0 text-brand" /> : <Plus className="h-5 w-5 flex-shrink-0 text-brand" />}
-                  </button>
-                  {isOpen && (
-                    <div className="px-6 pb-6 leading-relaxed text-muted-foreground">{it.a}</div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- FOOTER moved to SiteFooter component ---------- */

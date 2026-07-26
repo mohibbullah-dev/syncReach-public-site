@@ -35,6 +35,10 @@ export async function fetchPublicPricing() {
   return apiFetch("/pricing/public");
 }
 
+export async function fetchPublicFaq() {
+  return apiFetch("/faq/public");
+}
+
 export async function submitContactMessage(payload) {
   return apiFetch("/contact", {
     method: "POST",

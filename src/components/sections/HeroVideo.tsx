@@ -52,7 +52,7 @@ export function HeroVideo({ className }: { className?: string }) {
         >
           <img
             src={heroThumbUrl}
-            alt="SyncReach — We bring the leads, you close the deal"
+            alt="SyncReach: We bring the leads, you close the deal"
             className="absolute inset-0 h-full w-full object-cover"
           />
           <span className="absolute inset-0 bg-slate-950/20 transition group-hover:bg-slate-950/30" />

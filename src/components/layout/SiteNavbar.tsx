@@ -191,12 +191,7 @@ export function SiteNavbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           {adminNav.visible ? <AdminCta state={adminNav} /> : null}
-          <a
-            href="/#contact"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Talk to us
-          </a>
+      
           <a
             href="/#pricing"
             className="inline-flex items-center gap-1.5 rounded-[12px] bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95 hover:shadow-[0_12px_28px_-12px_oklch(0.58_0.22_260_/_0.65)]"

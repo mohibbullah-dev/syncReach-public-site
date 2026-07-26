@@ -79,27 +79,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SyncReach — Cold Outreach That Books Meetings" },
+      { title: "SyncReach: Cold Outreach That Books Meetings" },
       {
         name: "description",
         content:
-          "SyncReach is the cold email and outreach platform that finds leads, warms your inbox, and books qualified meetings — 24/7.",
+          "SyncReach is the cold email and outreach platform that finds leads, warms your inbox, and books qualified meetings, 24/7.",
       },
       { name: "author", content: "SyncReach" },
-      { property: "og:title", content: "SyncReach — Cold Outreach That Books Meetings" },
+      { property: "og:title", content: "SyncReach: Cold Outreach That Books Meetings" },
       {
         property: "og:description",
         content:
-          "SyncReach is the cold email and outreach platform that finds leads, warms your inbox, and books qualified meetings — 24/7.",
+          "SyncReach is the cold email and outreach platform that finds leads, warms your inbox, and books qualified meetings, 24/7.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@SyncReach" },
-      { name: "twitter:title", content: "SyncReach — Cold Outreach That Books Meetings" },
+      { name: "twitter:title", content: "SyncReach: Cold Outreach That Books Meetings" },
       {
         name: "twitter:description",
         content:
-          "SyncReach is the cold email and outreach platform that finds leads, warms your inbox, and books qualified meetings — 24/7.",
+          "SyncReach is the cold email and outreach platform that finds leads, warms your inbox, and books qualified meetings, 24/7.",
       },
     ],
     links: [

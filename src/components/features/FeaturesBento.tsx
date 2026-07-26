@@ -1,51 +1,51 @@
 ﻿import {
   ArrowRight,
-  BarChart3,
-  Inbox,
-  PenLine,
-  ShieldCheck,
-  Target,
-  Waypoints,
+  BrainCircuit,
+  CalendarCheck,
+  FlaskConical,
+  Mails,
+  MessageSquareReply,
+  UserSearch,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 
 const features = [
   {
-    title: "Smart Lead Finder",
-    desc: "Pull hyper-targeted B2B prospects with verified emails from 400M+ contacts in seconds.",
-    tag: "Prospecting",
-    icon: Target,
+    title: "ICP Research & Offer Strategy",
+    desc: "We identify your ideal customers, research competitors, and craft compelling offers with clear messaging that drives qualified conversations from day one.",
+    tag: "Step 1",
+    icon: UserSearch,
   },
   {
-    title: "Personalization at Scale",
-    desc: "Every email is tailored using your prospect's site, LinkedIn, and recent activity — at scale.",
-    tag: "Copy",
-    icon: PenLine,
+    title: "Targeted List Building & AI Personalization",
+    desc: "We build verified prospect lists, enrich data with AI, and personalize every message based on each company's business, needs, and fit.",
+    tag: "Step 2",
+    icon: BrainCircuit,
   },
   {
-    title: "Unlimited Inboxes",
-    desc: "Rotate across unlimited warmed-up mailboxes to hit the inbox, not the spam folder.",
-    tag: "Sending",
-    icon: Inbox,
+    title: "Outreach Infrastructure & Campaign Launch",
+    desc: "We configure secure email infrastructure, then launch personalized multi-step Email and LinkedIn campaigns that consistently reach decision-makers.",
+    tag: "Step 3",
+    icon: Mails,
   },
   {
-    title: "Auto Warm-Up",
-    desc: "Our warmup network keeps deliverability sky-high automatically, 24/7.",
-    tag: "Inbox health",
-    icon: ShieldCheck,
+    title: "Testing & Performance Optimization",
+    desc: "We continuously test ICPs, offers, subject lines, copy, CTAs, and channels to improve reply rates, meetings, and overall campaign performance.",
+    tag: "Step 4",
+    icon: FlaskConical,
   },
   {
-    title: "Multi-Channel Sequences",
-    desc: "Blend email, LinkedIn, and SMS steps into one seamless outreach flow.",
-    tag: "Workflow",
-    icon: Waypoints,
+    title: "Reply Management & CRM Automation",
+    desc: "We manage replies, nurture prospects, automate follow-ups, integrate with your CRM, and ensure every qualified opportunity receives timely attention.",
+    tag: "Step 5",
+    icon: MessageSquareReply,
   },
   {
-    title: "Reply-First Analytics",
-    desc: "Real dashboards that show what's booking meetings — not just open rates.",
-    tag: "Reporting",
-    icon: BarChart3,
+    title: "Qualified Appointment Booking",
+    desc: "Our focus is simple: fill your calendar with qualified decision-makers who match your ICP and are genuinely interested in your solution.",
+    tag: "Step 6",
+    icon: CalendarCheck,
   },
 ] as const;
 
@@ -61,10 +61,10 @@ export function FeaturesBento() {
             <>
               Everything you need to fill
               <br />
-              your pipeline — <span className="text-gradient-brand">in one place</span>.
+              your pipeline <span className="text-gradient-brand">in one place</span>.
             </>
           }
-          description="Stop stitching together 6 tools. SyncReach is your all-in-one outbound engine."
+          description="Stop stitching together 6 tools. SyncReach is your all in one outbound engine."
         />
 
         <div className="section-stack grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

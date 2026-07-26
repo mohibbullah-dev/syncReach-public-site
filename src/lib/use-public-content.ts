@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
 import {
+  fetchPublicFaq,
   fetchPublicGallery,
   fetchPublicPricing,
   fetchPublicReviews,
   fetchPublicTeam,
 } from "@/lib/api";
+import { faqItems as seedFaq, type FaqItem } from "@/data/faq";
 import { galleryItems as seedGallery, type GalleryItem } from "@/data/gallery";
 import { pricingPlans as seedPricing, type PricingPlan } from "@/data/pricing";
 import { reviews as seedReviews, type Review } from "@/data/reviews";
@@ -34,6 +36,7 @@ export function usePublicReviews(opts?: { featuredOnly?: boolean }) {
       fetchPublicReviews(opts?.featuredOnly ? { featured: "true" } : {}).then((list) =>
         (list as Review[]).map((r) => ({
           ...r,
+          type: (r.type as string) === "audio" ? "image" : r.type,
           avatar: sanitizeProfileImage(r.avatar),
         })),
       ),
@@ -93,6 +96,35 @@ export function usePublicTeam() {
     ).then((list) => {
       if (!cancelled) {
         setItems(list.filter((m) => m.published !== false).sort((a, b) => a.sortOrder - b.sortOrder));
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { items, loading };
+}
+
+export function usePublicFaq() {
+  const [items, setItems] = useState<FaqItem[]>(() =>
+    seedFaq.filter((f) => f.published).sort((a, b) => a.sortOrder - b.sortOrder),
+  );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void withFallback(
+      fetchPublicFaq() as Promise<FaqItem[]>,
+      seedFaq.filter((f) => f.published).sort((a, b) => a.sortOrder - b.sortOrder),
+    ).then((list) => {
+      if (!cancelled) {
+        setItems(
+          list
+            .filter((f) => f.published !== false)
+            .sort((a, b) => a.sortOrder - b.sortOrder),
+        );
         setLoading(false);
       }
     });

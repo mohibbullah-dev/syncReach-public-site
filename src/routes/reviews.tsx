@@ -1,6 +1,6 @@
 ﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowLeft, Mic, Play, Quote, Star, Type, Video } from "lucide-react";
+import { ArrowLeft, Image as ImageIcon, Play, Quote, Star, Type, Video } from "lucide-react";
 
 import {
   Dialog,
@@ -23,12 +23,12 @@ export const Route = createFileRoute("/reviews")({
 const filters: Array<{ id: "all" | ReviewType; label: string }> = [
   { id: "all", label: "All" },
   { id: "text", label: "Text" },
-  { id: "audio", label: "Audio" },
+  { id: "image", label: "Image" },
   { id: "video", label: "Video" },
 ];
 
 function TypeIcon({ type }: { type: ReviewType }) {
-  if (type === "audio") return <Mic className="h-3.5 w-3.5" />;
+  if (type === "image") return <ImageIcon className="h-3.5 w-3.5" />;
   if (type === "video") return <Video className="h-3.5 w-3.5" />;
   return <Type className="h-3.5 w-3.5" />;
 }
@@ -58,7 +58,7 @@ function ReviewsPage() {
           as="h1"
           eyebrow="Reviews"
           title="All reviews"
-          description="Browse text, audio, and video testimonials. Content is prepared for the upcoming admin CMS."
+          description="Browse text, image, and video testimonials from SyncReach clients."
         />
 
         <div className="mt-8 flex flex-wrap gap-2">
@@ -123,10 +123,14 @@ function ReviewsPage() {
                 </div>
               )}
 
-              {review.type === "audio" && (
-                <div className="mb-4 flex items-center gap-3 rounded-xl border border-border bg-muted/50 px-3 py-3">
-                  <Mic className="h-4 w-4 text-brand-glow" />
-                  <span className="text-xs text-muted-foreground">Click to play audio review</span>
+              {review.type === "image" && review.mediaUrl && (
+                <div className="relative mb-4 overflow-hidden rounded-[12px] border border-border bg-muted">
+                  <img
+                    src={review.mediaUrl}
+                    alt=""
+                    className="h-36 w-full object-cover"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                 </div>
               )}
 
@@ -176,8 +180,15 @@ function ReviewsPage() {
                     src={selected.mediaUrl}
                   />
                 )}
-                {selected.type === "audio" && selected.mediaUrl && (
-                  <audio key={selected.id} controls className="w-full" src={selected.mediaUrl} />
+                {selected.type === "image" && selected.mediaUrl && (
+                  <div className="overflow-hidden rounded-[12px] border border-border">
+                    <img
+                      key={selected.id}
+                      src={selected.mediaUrl}
+                      alt={`${selected.name} review`}
+                      className="max-h-80 w-full object-cover"
+                    />
+                  </div>
                 )}
                 <p className="text-sm leading-relaxed">"{selected.body}"</p>
               </div>

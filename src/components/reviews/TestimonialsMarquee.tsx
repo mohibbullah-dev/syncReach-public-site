@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Mic, Play, Quote, Star, Type, Video } from "lucide-react";
+import { ArrowRight, Image as ImageIcon, Play, Quote, Star, Type, Video } from "lucide-react";
 
 import { Marquee } from "@/components/ui/marquee";
 import {
@@ -20,7 +20,7 @@ import { SectionHeader } from "@/components/layout/SectionHeader";
 function TypeBadge({ type }: { type: ReviewType }) {
   const map = {
     text: { icon: Type, label: "Text" },
-    audio: { icon: Mic, label: "Audio" },
+    image: { icon: ImageIcon, label: "Image" },
     video: { icon: Video, label: "Video" },
   } as const;
   const { icon: Icon, label } = map[type];
@@ -44,7 +44,7 @@ function ReviewCard({
       type="button"
       onClick={() => onOpen(review)}
       className={cn(
-        "relative w-[17rem] cursor-pointer overflow-hidden rounded-[12px] border border-border bg-white p-4 text-left shadow-[0_14px_36px_-18px_rgba(15,23,42,0.32)] backdrop-blur transition sm:w-[18.5rem] sm:p-[1.125rem]",
+        "group relative w-[17rem] cursor-pointer overflow-hidden rounded-[12px] border border-border bg-white p-4 text-left shadow-[0_14px_36px_-18px_rgba(15,23,42,0.32)] backdrop-blur transition sm:w-[18.5rem] sm:p-[1.125rem]",
         "hover:-translate-y-0.5 hover:border-brand/50 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
       )}
     >
@@ -78,20 +78,14 @@ function ReviewCard({
         </div>
       )}
 
-      {review.type === "audio" && (
-        <div className="mb-3 flex items-center gap-3 rounded-[12px] border border-border bg-muted/60 px-3 py-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-primary-foreground">
-            <Mic className="h-4 w-4" />
-          </span>
-          <div className="flex flex-1 items-end gap-0.5">
-            {[4, 8, 5, 10, 6, 9, 4, 7, 5, 8, 6, 9].map((h, i) => (
-              <span
-                key={i}
-                className="w-1 rounded-full bg-brand-glow/80"
-                style={{ height: `${h * 2}px` }}
-              />
-            ))}
-          </div>
+      {review.type === "image" && review.mediaUrl && (
+        <div className="relative mb-3 overflow-hidden rounded-[12px] border border-border bg-muted">
+          <img
+            src={review.mediaUrl}
+            alt=""
+            className="h-32 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
         </div>
       )}
 
@@ -159,11 +153,14 @@ function ReviewDetailDialog({
             />
           )}
 
-          {review.type === "audio" && review.mediaUrl && (
-            <div className="rounded-xl border border-border bg-muted/50 p-4">
-              <audio key={review.id} controls className="w-full" src={review.mediaUrl}>
-                Your browser does not support the audio element.
-              </audio>
+          {review.type === "image" && review.mediaUrl && (
+            <div className="overflow-hidden rounded-[12px] border border-border">
+              <img
+                key={review.id}
+                src={review.mediaUrl}
+                alt={`${review.name} review`}
+                className="max-h-72 w-full object-cover"
+              />
             </div>
           )}
 
@@ -212,49 +209,37 @@ export function TestimonialsMarquee() {
           eyebrow="Loved by outbound teams"
           title={
             <>
-              Real teams.
+              TRUSTED BY B2B FOUNDERS
               <br />
-              Real replies. Real revenue.
+              Real clients. Real results.
             </>
           }
-          description="Text, audio, and video reviews — managed from the admin CMS, click any card to watch or listen."
+          description="Hear directly from founders growing through outbound."
         />
 
-        <div className="group relative mx-auto flex h-[26rem] w-full flex-row items-stretch justify-center overflow-hidden rounded-[12px] border border-border bg-card/20 [perspective:900px] sm:h-[30rem] md:h-[34rem]">
-          <div
-            className={cn(
-              "flex h-[220%] w-full origin-top flex-row items-start justify-center gap-3 sm:gap-5",
-              "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform",
-              /* Crop empty top: pull stage up + mild bottom→top lean */
-              "[transform:translateY(-12%)_rotateX(12deg)_translateZ(-20px)_scale(1.06)]",
-              "sm:[transform:translateY(-14%)_rotateX(18deg)_translateZ(-50px)_scale(1.08)]",
-              "group-hover:![transform:translateY(-4%)_rotateX(0deg)_translateZ(0)_scale(1.02)]",
-              "group-focus-within:![transform:translateY(-4%)_rotateX(0deg)_translateZ(0)_scale(1.02)]",
-            )}
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            <Marquee pauseOnHover vertical repeat={5} className="h-full w-auto shrink-0 p-0 [--duration:55s] [--gap:1.25rem]">
-              {c1.map((review, i) => (
-                <ReviewCard key={`c1-${review.id}-${i}`} review={review} onOpen={openReview} />
-              ))}
-            </Marquee>
-            <Marquee reverse pauseOnHover vertical repeat={5} className="h-full w-auto shrink-0 p-0 [--duration:62s] [--gap:1.25rem]">
-              {c2.map((review, i) => (
-                <ReviewCard key={`c2-${review.id}-${i}`} review={review} onOpen={openReview} />
-              ))}
-            </Marquee>
-            <Marquee pauseOnHover vertical repeat={5} className="hidden h-full w-auto shrink-0 p-0 [--duration:58s] [--gap:1.25rem] md:flex">
-              {c3.map((review, i) => (
-                <ReviewCard key={`c3-${review.id}-${i}`} review={review} onOpen={openReview} />
-              ))}
-            </Marquee>
-            <Marquee reverse pauseOnHover vertical repeat={5} className="hidden h-full w-auto shrink-0 p-0 [--duration:66s] [--gap:1.25rem] lg:flex">
-              {c4.map((review, i) => (
-                <ReviewCard key={`c4-${review.id}-${i}`} review={review} onOpen={openReview} />
-              ))}
-            </Marquee>
-          </div>
+        <div className="relative mx-auto flex h-[26rem] w-full flex-row items-stretch justify-center gap-3 overflow-hidden rounded-[12px] border border-border bg-card/20 p-3 sm:h-[30rem] sm:gap-5 sm:p-4 md:h-[34rem]">
+          <Marquee pauseOnHover vertical repeat={5} className="h-full w-auto shrink-0 p-0 [--duration:55s] [--gap:1.25rem]">
+            {c1.map((review, i) => (
+              <ReviewCard key={`c1-${review.id}-${i}`} review={review} onOpen={openReview} />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover vertical repeat={5} className="h-full w-auto shrink-0 p-0 [--duration:62s] [--gap:1.25rem]">
+            {c2.map((review, i) => (
+              <ReviewCard key={`c2-${review.id}-${i}`} review={review} onOpen={openReview} />
+            ))}
+          </Marquee>
+          <Marquee pauseOnHover vertical repeat={5} className="hidden h-full w-auto shrink-0 p-0 [--duration:58s] [--gap:1.25rem] md:flex">
+            {c3.map((review, i) => (
+              <ReviewCard key={`c3-${review.id}-${i}`} review={review} onOpen={openReview} />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover vertical repeat={5} className="hidden h-full w-auto shrink-0 p-0 [--duration:66s] [--gap:1.25rem] lg:flex">
+            {c4.map((review, i) => (
+              <ReviewCard key={`c4-${review.id}-${i}`} review={review} onOpen={openReview} />
+            ))}
+          </Marquee>
 
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-background to-transparent sm:h-14" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-background to-transparent sm:h-14" />
           <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent sm:w-14" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent sm:w-14" />

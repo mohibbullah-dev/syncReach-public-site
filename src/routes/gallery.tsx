@@ -64,7 +64,7 @@ function GalleryPage() {
                   <span className="text-gradient-brand">outbound floor</span>.
                 </>
               }
-              description="Photos and videos managed from the admin CMS — upload once, publish everywhere."
+              description="Photos and videos managed from the admin CMS. Upload once, publish everywhere."
             />
 
             <div className="flex flex-wrap gap-2">

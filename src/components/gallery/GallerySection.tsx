@@ -44,15 +44,15 @@ export function GallerySection() {
       <div className="container-page relative">
         <SectionHeader
           align="center"
-          eyebrow="Gallery"
+          eyebrow="Campaigns"
           title={
             <>
-              Moments from the
+            PERFORMANCE GALLERY
               <br />
-              <span className="text-gradient-brand">outbound floor</span>.
+              <span className="text-gradient-brand">Built on data. Driven by results.</span>.
             </>
           }
-          description="A quick look at photos and videos from the team — explore the full gallery for everything."
+          description="Recent campaign performance from real outbound systems."
         />
       </div>
 

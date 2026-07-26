@@ -63,7 +63,7 @@ export const pricingPlans: PricingPlan[] = [
     id: "p3",
     badge: "CUSTOM",
     name: "Custom",
-    desc: "Build your own outbound stack — pick volume, seats, and add-ons.",
+    desc: "Build your own outbound stack. Pick volume, seats, and add ons.",
     price: "Custom",
     unit: "/ month",
     extrasBadge: "",
