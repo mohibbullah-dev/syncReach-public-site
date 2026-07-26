@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNavbar } from "@/components/layout/SiteNavbar";
+import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 
 function NotFoundComponent() {
   return (
@@ -140,6 +141,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <SiteNavbar />
       <Outlet />
+      <FloatingWhatsApp />
     </QueryClientProvider>
   );
 }
