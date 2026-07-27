@@ -8,7 +8,7 @@ import {
 import { TestimonialsMarquee } from "@/components/reviews/TestimonialsMarquee";
 import { GallerySection } from "@/components/gallery/GallerySection";
 import { FeaturesBento } from "@/components/features/FeaturesBento";
-import { HeroVideo } from "@/components/sections/HeroVideo";
+import { HeroMedia } from "@/components/sections/HeroVideo";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -16,7 +16,7 @@ import { SectionHeader } from "@/components/layout/SectionHeader";
 import { CustomPricingCard } from "@/components/pricing/CustomPricingCard";
 import { submitContactMessage } from "@/lib/api";
 import { isCustomPricingPlan, QUOTE_STORAGE_KEY } from "@/lib/pricing-quote";
-import { usePublicPricing, usePublicTeam } from "@/lib/use-public-content";
+import { usePublicHero, usePublicPricing, usePublicTeam } from "@/lib/use-public-content";
 
 
 export const Route = createFileRoute("/")({
@@ -48,6 +48,8 @@ const HERO_TRUST = [
 ] as const;
 
 function Hero() {
+  const { hero } = usePublicHero();
+
   return (
     <section id="top" className="relative overflow-x-clip section-y-hero bg-hero-glow">
       <div className="container-page grid items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20">
@@ -62,17 +64,16 @@ function Hero() {
 
           <h1 className="font-display text-[clamp(1.55rem,6.4vw,4.35rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground">
             <span className="block whitespace-nowrap">
-              We bring <span className="text-brand">the leads.</span>
+              {hero.headlineBefore}{" "}
+              <span className="text-brand">{hero.headlineHighlight}</span>
             </span>
             <span className="mt-0.5 block whitespace-nowrap sm:mt-1">
-              You close the deal.
+              {hero.headlineLine2}
             </span>
           </h1>
 
           <p className="mx-auto mt-4 max-w-[34ch] text-[0.9375rem] font-medium leading-relaxed text-foreground/80 sm:mt-6 sm:max-w-md sm:text-base md:text-lg lg:mx-0 lg:max-w-lg">
-            We help B2B businesses build qualified sales pipelines through strategic cold
-            email and LinkedIn outreach, powered by AI driven personalisation, lead
-            qualification, and appointment setting.
+            {hero.description}
           </p>
 
           <div className="mt-6 flex justify-center sm:mt-7 lg:justify-start">
@@ -100,7 +101,7 @@ function Hero() {
           </ul>
         </div>
 
-        <HeroVideo className="w-full" />
+        <HeroMedia hero={hero} className="w-full" />
       </div>
     </section>
   );

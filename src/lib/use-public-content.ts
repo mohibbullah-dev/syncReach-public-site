@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import {
   fetchPublicFaq,
   fetchPublicGallery,
+  fetchPublicHero,
   fetchPublicPricing,
   fetchPublicReviews,
   fetchPublicTeam,
 } from "@/lib/api";
 import { faqItems as seedFaq, type FaqItem } from "@/data/faq";
+import { defaultHeroContent, type HeroContent } from "@/data/hero";
 import { galleryItems as seedGallery, type GalleryItem } from "@/data/gallery";
 import { pricingPlans as seedPricing, type PricingPlan } from "@/data/pricing";
 import { reviews as seedReviews, type Review } from "@/data/reviews";
@@ -134,6 +136,28 @@ export function usePublicFaq() {
   }, []);
 
   return { items, loading };
+}
+
+export function usePublicHero() {
+  const [hero, setHero] = useState<HeroContent>(() => defaultHeroContent);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void withFallback(fetchPublicHero() as Promise<HeroContent>, defaultHeroContent).then(
+      (data) => {
+        if (!cancelled) {
+          setHero(data);
+          setLoading(false);
+        }
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { hero, loading };
 }
 
 export function usePublicPricing() {

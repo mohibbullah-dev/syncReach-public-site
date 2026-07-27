@@ -39,6 +39,10 @@ export async function fetchPublicFaq() {
   return apiFetch("/faq/public");
 }
 
+export async function fetchPublicHero() {
+  return apiFetch("/hero/public");
+}
+
 export async function submitContactMessage(payload) {
   return apiFetch("/contact", {
     method: "POST",
