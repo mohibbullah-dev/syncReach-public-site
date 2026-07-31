@@ -27,7 +27,7 @@ const companyLinks = [
 ] as const;
 
 const socials = [
-  { icon: Facebook, href: "https://www.facebook.com/safiqemailer", label: "Facebook", tip: "Follow us on Facebook" },
+  { icon: Facebook, href: "https://www.facebook.com/SyncReachai", label: "Facebook", tip: "Follow us on Facebook" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/emailmarketerr/", label: "LinkedIn", tip: "Connect on LinkedIn" },
   { icon: Twitter, href: "https://x.com/ismail3dartist", label: "X", tip: "Follow us on X" },
 ] as const;
