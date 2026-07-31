@@ -1,7 +1,6 @@
 ﻿import {
   ChevronRight,
   Facebook,
-  Instagram,
   Linkedin,
   Mail,
   MapPin,
@@ -28,10 +27,9 @@ const companyLinks = [
 ] as const;
 
 const socials = [
-  { icon: Facebook, href: "https://facebook.com", label: "Facebook", tip: "Follow us on Facebook" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn", tip: "Connect on LinkedIn" },
-  { icon: Twitter, href: "https://twitter.com", label: "Twitter", tip: "Follow us on X / Twitter" },
-  { icon: Instagram, href: "https://instagram.com", label: "Instagram", tip: "Follow us on Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/safiqemailer", label: "Facebook", tip: "Follow us on Facebook" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/emailmarketerr/", label: "LinkedIn", tip: "Connect on LinkedIn" },
+  { icon: Twitter, href: "https://x.com/ismail3dartist", label: "X", tip: "Follow us on X" },
 ] as const;
 
 const legalLinks = [
