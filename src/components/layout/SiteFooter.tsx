@@ -142,12 +142,12 @@ const year = 2024
                   </li>
                   <li className="py-2">
                     <TipLink
-                      href="mailto:safiq3d@gmail.com"
+                      href="mailto:Safiq@syncreachai.com"
                       tip="Send an email"
                       className="flex items-start gap-3 text-sm text-muted-foreground transition hover:text-foreground"
                     >
                       <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                      <span>safiq3d@gmail.com</span>
+                      <span>Safiq@syncreachai.com</span>
                     </TipLink>
                   </li>
                   <li className="py-2 last:pb-0">

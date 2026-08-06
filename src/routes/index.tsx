@@ -331,7 +331,7 @@ function Contact() {
             <ContactRow
               icon={Mail}
               label="Email us"
-              values={["safiq3d@gmail.com", "sabidkhan@syncrech.com"]}
+              values={["Safiq@syncreachai.com", "sabidkhan@syncrech.com"]}
             />
             <ContactRow icon={Phone} label="Call us" values={["+880 1315 121758"]} />
             <ContactRow icon={MapPin} label="Visit us" values={["Faridpur, Dhaka, Bangladesh"]} />
