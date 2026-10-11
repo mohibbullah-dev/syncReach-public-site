@@ -1,9 +1,18 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  ArrowRight, Check, Mail, Phone, MapPin, Calendar,
-  BadgeDollarSign, Trophy, FileCheck2, Users,
-  Facebook, Linkedin,
+  ArrowRight,
+  Check,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+  BadgeDollarSign,
+  Trophy,
+  FileCheck2,
+  Users,
+  Facebook,
+  Linkedin,
 } from "lucide-react";
 import { TestimonialsMarquee } from "@/components/reviews/TestimonialsMarquee";
 import { GallerySection } from "@/components/gallery/GallerySection";
@@ -17,7 +26,6 @@ import { CustomPricingCard } from "@/components/pricing/CustomPricingCard";
 import { submitContactMessage } from "@/lib/api";
 import { isCustomPricingPlan, QUOTE_STORAGE_KEY } from "@/lib/pricing-quote";
 import { usePublicHero, usePublicPricing, usePublicTeam } from "@/lib/use-public-content";
-
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -64,12 +72,9 @@ function Hero() {
 
           <h1 className="font-display text-[clamp(1.55rem,6.4vw,4.35rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground">
             <span className="block whitespace-nowrap">
-              {hero.headlineBefore}{" "}
-              <span className="text-brand">{hero.headlineHighlight}</span>
+              {hero.headlineBefore} <span className="text-brand">{hero.headlineHighlight}</span>
             </span>
-            <span className="mt-0.5 block whitespace-nowrap sm:mt-1">
-              {hero.headlineLine2}
-            </span>
+            <span className="mt-0.5 block whitespace-nowrap sm:mt-1">{hero.headlineLine2}</span>
           </h1>
 
           <p className="mx-auto mt-4 max-w-[34ch] text-[0.9375rem] font-medium leading-relaxed text-foreground/80 sm:mt-6 sm:max-w-md sm:text-base md:text-lg lg:mx-0 lg:max-w-lg">
@@ -88,10 +93,11 @@ function Hero() {
 
           <ul className="mx-auto mt-7 grid w-full max-w-xs grid-cols-1 gap-2.5 sm:mt-8 sm:max-w-none sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-5 sm:gap-y-3 lg:mx-0 lg:justify-start lg:gap-x-6">
             {HERO_TRUST.map(({ icon: Icon, label }, i) => (
-              <li key={label} className="flex items-center justify-center gap-2 sm:justify-start sm:gap-5 lg:gap-6">
-                {i > 0 ? (
-                  <span className="hidden h-4 w-px bg-border sm:block" aria-hidden />
-                ) : null}
+              <li
+                key={label}
+                className="flex items-center justify-center gap-2 sm:justify-start sm:gap-5 lg:gap-6"
+              >
+                {i > 0 ? <span className="hidden h-4 w-px bg-border sm:block" aria-hidden /> : null}
                 <span className="inline-flex items-center gap-2 rounded-[12px] border border-border/70 bg-white/70 px-3 py-2 text-[13px] font-medium text-foreground/80 sm:border-0 sm:bg-transparent sm:p-0 sm:text-sm">
                   <Icon className="h-4 w-4 shrink-0 text-brand" strokeWidth={2.25} />
                   {label}
@@ -165,9 +171,7 @@ function Pricing() {
                 {p.extrasBadge ? (
                   <div
                     className={`relative mt-3 inline-flex w-fit rounded-lg px-2.5 py-1 text-xs font-semibold ${
-                      p.featured
-                        ? "bg-brand/15 text-brand"
-                        : "bg-muted text-foreground/80"
+                      p.featured ? "bg-brand/15 text-brand" : "bg-muted text-foreground/80"
                     }`}
                   >
                     {p.extrasBadge}
@@ -196,7 +200,10 @@ function Pricing() {
                   </div>
                   <ul className="space-y-1.5">
                     {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-xs text-foreground/80 sm:text-sm">
+                      <li
+                        key={f}
+                        className="flex items-start gap-2 text-xs text-foreground/80 sm:text-sm"
+                      >
                         <span className="mt-0.5 flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center rounded-full bg-brand">
                           <Check className="h-2 w-2 text-primary-foreground" strokeWidth={3} />
                         </span>
@@ -234,11 +241,18 @@ function Team() {
         />
         <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
           {team.map((m) => (
-            <div key={m.id} className="group rounded-[12px] border border-border bg-card/50 p-6 text-center transition-all hover:border-brand/50 hover:shadow-glow">
+            <div
+              key={m.id}
+              className="group rounded-[12px] border border-border bg-card/50 p-6 text-center transition-all hover:border-brand/50 hover:shadow-glow"
+            >
               <div className="relative mx-auto h-40 w-40">
                 <div className="absolute inset-0 rounded-full bg-gradient-brand opacity-40 blur-xl transition group-hover:opacity-70" />
                 {m.img ? (
-                  <img src={m.img} alt={m.name} className="relative h-40 w-40 rounded-full border-2 border-brand/40 object-cover" />
+                  <img
+                    src={m.img}
+                    alt={m.name}
+                    className="relative h-40 w-40 rounded-full border-2 border-brand/40 object-cover"
+                  />
                 ) : (
                   <div className="relative flex h-40 w-40 items-center justify-center rounded-full border-2 border-brand/40 bg-muted text-muted-foreground">
                     <Users className="h-16 w-16" />
@@ -248,10 +262,22 @@ function Team() {
               <h3 className="mt-5 text-lg font-semibold">{m.name}</h3>
               <div className="text-sm text-muted-foreground">{m.role}</div>
               <div className="mt-4 flex items-center justify-center gap-2">
-                <a href={m.facebookUrl} target="_blank" rel="noreferrer" aria-label={`${m.name} on Facebook`} className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background transition hover:border-transparent hover:bg-gradient-brand">
+                <a
+                  href={m.facebookUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${m.name} on Facebook`}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background transition hover:border-transparent hover:bg-gradient-brand"
+                >
                   <Facebook className="h-4 w-4" />
                 </a>
-                <a href={m.linkedinUrl} target="_blank" rel="noreferrer" aria-label={`${m.name} on LinkedIn`} className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background transition hover:border-transparent hover:bg-gradient-brand">
+                <a
+                  href={m.linkedinUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${m.name} on LinkedIn`}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background transition hover:border-transparent hover:bg-gradient-brand"
+                >
                   <Linkedin className="h-4 w-4" />
                 </a>
               </div>
@@ -331,7 +357,7 @@ function Contact() {
             <ContactRow
               icon={Mail}
               label="Email us"
-              values={["Safiq@syncreachai.com", "sabidkhan@syncrech.com"]}
+              values={["Safiq@syncreachai.com", "Safiq@sync-reachai.com"]}
             />
             <ContactRow icon={Phone} label="Call us" values={["+880 1315 121758"]} />
             <ContactRow icon={MapPin} label="Visit us" values={["Faridpur, Dhaka, Bangladesh"]} />
@@ -374,8 +400,7 @@ function Contact() {
             disabled={status === "sending"}
             className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-5 py-3.5 font-medium text-primary-foreground shadow-glow transition hover:opacity-95 disabled:opacity-60"
           >
-            {status === "sending" ? "Sending…" : "Send message"}{" "}
-            <ArrowRight className="h-4 w-4" />
+            {status === "sending" ? "Sending…" : "Send message"} <ArrowRight className="h-4 w-4" />
           </button>
         </form>
       </div>
@@ -383,7 +408,15 @@ function Contact() {
   );
 }
 
-function ContactRow({ icon: Icon, label, values }: { icon: typeof Mail; label: string; values: string[] }) {
+function ContactRow({
+  icon: Icon,
+  label,
+  values,
+}: {
+  icon: typeof Mail;
+  label: string;
+  values: string[];
+}) {
   return (
     <div className="flex gap-4 items-start rounded-[12px] border border-border bg-background p-4">
       <div className="w-10 h-10 rounded-xl bg-gradient-brand flex items-center justify-center shadow-glow flex-shrink-0">
@@ -391,7 +424,11 @@ function ContactRow({ icon: Icon, label, values }: { icon: typeof Mail; label: s
       </div>
       <div>
         <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
-        {values.map((v) => <div key={v} className="text-sm font-medium">{v}</div>)}
+        {values.map((v) => (
+          <div key={v} className="text-sm font-medium">
+            {v}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -423,4 +460,3 @@ function Field({
     </div>
   );
 }
-
