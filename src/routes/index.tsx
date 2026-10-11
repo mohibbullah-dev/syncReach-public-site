@@ -354,11 +354,7 @@ function Contact() {
           />
 
           <div className="mt-8 space-y-4">
-            <ContactRow
-              icon={Mail}
-              label="Email us"
-              values={["Safiq@syncreachai.com", "Safiq@sync-reachai.com"]}
-            />
+            <ContactRow icon={Mail} label="Email us" values={["Safiq@sync-reachai.com"]} />
             <ContactRow icon={Phone} label="Call us" values={["+880 1315 121758"]} />
             <ContactRow icon={MapPin} label="Visit us" values={["Faridpur, Dhaka, Bangladesh"]} />
           </div>
